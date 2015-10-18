@@ -12,6 +12,7 @@
  */
 package project4;
 
+import java.lang.reflect.Constructor;
 import java.util.List;
 
 /* see the PDF for descriptions of the methods and fields in this class
@@ -19,7 +20,7 @@ import java.util.List;
  * no new public, protected or default-package code or data can be added to Critter
  */
 public abstract class Critter {
-	
+
 	private static java.util.Random rand = new java.util.Random();
 	public static int getRandomInt(int max) {
 		return rand.nextInt(max);
@@ -57,6 +58,26 @@ public abstract class Critter {
 	 * an InvalidCritterException must be thrown
 	 */
 	public static void makeCritter(String critter_class_name) throws InvalidCritterException {
+		Class<?> newCritterClass = null; 
+		try {
+			newCritterClass = Class.forName(critter_class_name);	
+		} catch (ClassNotFoundException e) {
+			e.printStackTrace();
+		}
+		Constructor<?> constructor = null;
+		try {
+			constructor = newCritterClass.getConstructor();	
+		} catch (NoSuchMethodException | SecurityException e) {
+			e.printStackTrace();
+		}
+		Object newCritter = null;
+		try {
+			newCritter = constructor.newInstance();
+		} 
+		// Type out the catch blocks... :'(
+		
+		// Add critter to bulk population
+		population.add(newCritter);
 	}
 	
 	public static List<Critter> getInstances(String critter_class_name) throws InvalidCritterException {
