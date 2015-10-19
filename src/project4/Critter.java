@@ -136,5 +136,30 @@ public abstract class Critter {
 	public static void worldTimeStep() {
 	}
 	
-	public static void displayWorld() {}
+	public static void displayWorld() {
+		String[][] output = new String[Params.world_height+2][Params.world_width+2]; 
+		for (int i = 0; i < Params.world_height+2; i +=1 ) {
+			for (int j = 0; j < Params.world_width+2; j +=1 ) {
+				if (i == 0 || i == Params.world_height+1) {
+					if (j == 0 || j == Params.world_width+1) {
+						output[i][j] = "+";
+						continue;
+					}
+					else {
+						output[i][j] = "-";
+					}
+				}
+				else if (j == 0 || j == Params.world_width+1) {
+					output[i][j] = "|";
+				}
+				else {
+					output[i][j] = " ";
+				}
+			}
+		}
+		for (Critter a : population) {
+			output[a.x_coord][a.y_coord] = a.toString();			
+		}
+		// TODO: Iterate through and print out
+	}
 }
