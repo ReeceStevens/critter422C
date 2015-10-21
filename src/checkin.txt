@@ -1,0 +1,30 @@
+Design Checkin
+==============
+
+Class Outline
+	Position
+	ReeceCritter1 extends Critter
+	ReeceCritter2 extends Critter
+	AjayCritter1 extends Critter
+	AjayCritter2 extends Critter
+
+Position will have:
+	private int x;
+	private int y;
+	void constructor;
+	(x,y) constructor;
+	public int getX();
+	public int getY();
+	public int distance(Position p);
+
+Each critter will have:
+	public void doTimeStep()
+	public String toString()
+	private int dir;
+	void constructor	
+	public boolean fight(String) // determines fighting frequency
+	public void walk()
+	public void run()
+	public void reproduce()
+	public Position getPos()
+			
