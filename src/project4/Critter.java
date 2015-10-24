@@ -21,7 +21,7 @@ import java.util.List;
  */
 public abstract class Critter {
 
-	private static String [] validCritters = { "Algae", "Craig", "ReeceCritter1", "ReeceCritter2", "AjayCritter1", "AjayCritter2" };
+	private static String [] validCritters = { "project4.Algae", "project4.Craig", "project4.ReeceCritter1", "project4.ReeceCritter2", "project4.AjayCritter1", "project4.AjayCritter2" };
 
 	private static java.util.Random rand = new java.util.Random();
 	public static int getRandomInt(int max) {
@@ -170,7 +170,11 @@ public abstract class Critter {
 		}	
 		// 5. Generate new algae
 		for (int i  = 0; i < Params.refresh_algae_count; i += 1) {
-			Critter.makeCritter("Algae");	
+			try {
+				Critter.makeCritter("project4.Algae");
+			} catch (InvalidCritterException e) {
+				e.printStackTrace();
+			}
 		}	
 		// 6. Add new babies into critter collection
 		
@@ -200,7 +204,8 @@ public abstract class Critter {
 		}
 		// Draw Critters
 		for (Critter a : population) {
-			output[a.x_coord][a.y_coord] = a.toString();			
+			System.out.println("Algae at " + a.x_coord + ", " + a.y_coord + "!");
+			output[a.x_coord + 1][a.y_coord + 1] = a.toString();			
 		}
 		for (int i = 0; i < Params.world_height+2; i += 1) {
 			for (int j = 0; j < Params.world_width+2; j += 1) {
