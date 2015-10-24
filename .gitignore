@@ -3,3 +3,4 @@
 src/.metadata/*
 .metadata/*
 /bin/
+*.swp

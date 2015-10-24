@@ -49,9 +49,9 @@ public abstract class Critter {
 	//These two functions exist to implement the 2-D torus projection property of the world
 	private final int wrapX(int steps) {
 		if ((x_coord + steps) < 0){
-			return (world_width - steps);
+			return (Params.world_width - steps);
 		} 
-		else if ((x_coord + steps) > (world_width - 1)){
+		else if ((x_coord + steps) > (Params.world_width - 1)){
 			return (steps - 1);
 		}
 		else {return x_coord += steps;}
@@ -59,9 +59,9 @@ public abstract class Critter {
 
 	private final int wrapY(int steps) {
 		if ((y_coord + steps) < 0){
-			return (world_height - steps);
+			return (Params.world_height - steps);
 		} 
-		else if ((y_coord + steps) > (world_height - 1)){
+		else if ((y_coord + steps) > (Params.world_height - 1)){
 			return (steps - 1);
 		}
 		else {return y_coord += steps;}
@@ -91,7 +91,7 @@ public abstract class Critter {
 				x_coord = wrapX(1);
 				y_coord = wrapY(1);	
 		}
-		energy -= walk_energy_cost;
+		energy -= Params.walk_energy_cost;
 	}
 
 	// Implemented per critter	
@@ -118,7 +118,7 @@ public abstract class Critter {
 				x_coord = wrapX(2);
 				y_coord = wrapY(2);	
 		}
-		energy -= run_energy_cost;
+		energy -= Params.run_energy_cost;
 	}
 
 	// Implemented per critter	
