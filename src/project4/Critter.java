@@ -47,7 +47,7 @@ public abstract class Critter {
 	private int y_coord;
 	
 	//These two functions exist to implement the 2-D torus projection property of the world
-	private final void wrapX(int steps) {
+	private final int wrapX(int steps) {
 		if ((x_coord + steps) < 0){
 			return (world_width - steps);
 		} 
@@ -57,7 +57,7 @@ public abstract class Critter {
 		else {return x_coord += steps;}
 	}
 
-	private final void wrapY(int steps) {
+	private final int wrapY(int steps) {
 		if ((y_coord + steps) < 0){
 			return (world_height - steps);
 		} 
