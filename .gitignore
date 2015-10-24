@@ -2,3 +2,4 @@
 *.log
 src/.metadata/*
 .metadata/*
+/bin/
