@@ -46,15 +46,79 @@ public abstract class Critter {
 	private int x_coord;
 	private int y_coord;
 	
-	// Implemented per critter	
-	protected final void walk(int direction) {
-				
-	
+	//These two functions exist to implement the 2-D torus projection property of the world
+	private final void wrapX(int steps) {
+		if ((x_coord + steps) < 0){
+			return (world_width - steps);
+		} 
+		else if ((x_coord + steps) > (world_width - 1)){
+			return (steps - 1);
+		}
+		else {return x_coord += steps;}
+	}
+
+	private final void wrapY(int steps) {
+		if ((y_coord + steps) < 0){
+			return (world_height - steps);
+		} 
+		else if ((y_coord + steps) > (world_height - 1)){
+			return (steps - 1);
+		}
+		else {return y_coord += steps;}
 	}
 
 	// Implemented per critter	
-	protected final void run(int direction) {
-			
+	protected final void walk(int direction) {
+		switch (direction) {
+			case 0: //move east one unit
+				x_coord = wrapX(1);
+			case 1: //move northeast one unit
+				x_coord = wrapX(1);
+				y_coord = wrapY(-1);
+			case 2: //move north one unit
+				y_coord = wrapY(-1);
+			case 3: //move northwest one unit
+				x_coord = wrapX(-1);
+				y_coord = wrapY(-1);
+			case 4: //move west one unit
+				x_coord = wrapX(-1);
+			case 5: //move southwest one unit
+				x_coord = wrapX(-1);
+				y_coord = wrapY(1);
+			case 6: //move south one unit
+				y_coord = wrapY(1);
+			case 7: //southeast one unit
+				x_coord = wrapX(1);
+				y_coord = wrapY(1);	
+		}
+		energy -= walk_energy_cost;
+	}
+
+	// Implemented per critter	
+	protected final void run(int direction) {	
+		switch (direction) {
+			case 0: //move east two units
+				x_coord = wrapX(2);
+			case 1: //move northeast two units
+				x_coord = wrapX(2);
+				y_coord = wrapY(-2);
+			case 2: //move north two units
+				y_coord = wrapY(-2);
+			case 3: //move northwest two units
+				x_coord = wrapX(-2);
+				y_coord = wrapY(-2);
+			case 4: //move west two units
+				x_coord = wrapX(-2);
+			case 5: //move southwest two units
+				x_coord = wrapX(-2);
+				y_coord = wrapY(2);
+			case 6: //move south two units
+				y_coord = wrapY(2);
+			case 7: //southeast two units
+				x_coord = wrapX(2);
+				y_coord = wrapY(2);	
+		}
+		energy -= run_energy_cost;
 	}
 
 	// Implemented per critter	
