@@ -229,9 +229,13 @@ public abstract class Critter {
 		// 3. Orchestrate all fights
 		
 		// 4. Deduct rest energy costs
-		
+		for (Critter a: population) {
+			a.energy = a.energy - Params.rest_energy_cost;
+		}	
 		// 5. Generate new algae
-		
+		for (int i  = 0; i < Params.refresh_algae_count; i += 1) {
+			Critter.makeCritter("Algae");	
+		}	
 		// 6. Add new babies into critter collection
 		
 	}

@@ -27,8 +27,8 @@ public class Position {
 	}
 
 	public boolean adjacent (Position p) {
-		if this.isEqual(p) { return false; }
-		if (p.getX() - 1 == this.x) || (p.getX() == this.x) || (p.getX() + 1 == this.x) {
+		if (this.isEqual(p)) { return false; }
+		if ((p.getX() - 1 == this.x) || (p.getX() == this.x) || (p.getX() + 1 == this.x)) {
 			if ((p.getY() - 1 == this.y) || (p.getY() == this.y) || (p.getY() + 1 == this.y)) {
 				return true;
 			}
