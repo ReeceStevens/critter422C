@@ -196,8 +196,8 @@ public abstract class Critter {
 		for (Critter a : population) {
 			output[a.x_coord][a.y_coord] = a.toString();			
 		}
-		for (int i = 0; i < Params.world_height; i += 1) {
-			for (int j = 0; j < Params.world_width; j += 1) {
+		for (int i = 0; i < Params.world_height+2; i += 1) {
+			for (int j = 0; j < Params.world_width+2; j += 1) {
 				System.out.print(output[i][j]);
 			}
 			System.out.print("\n");
