@@ -39,6 +39,7 @@ public abstract class Critter {
 	public boolean isAlive() {
 		return alive;
 	}
+
 	
 	private int energy = 0;
 	protected int getEnergy() { return energy; }
@@ -216,11 +217,17 @@ public abstract class Critter {
 
 		
 	public static void worldTimeStep() {
+		System.out.println("Population Size: " + population.size());
 		// 1. Remove dead critters
+		java.util.ArrayList<Critter> toRemove = new java.util.ArrayList<Critter>();
 		for (Critter a : population) {
 			if (!a.isAlive()) {
-				population.remove(a);
+				toRemove.add(a);
 			}	
+		}
+		System.out.println("Population Size: " + population.size());
+		for (Critter a : toRemove) {
+			population.remove(a);
 		}
 		// 2. call doTimeStep() for every critter
 		for (Critter a: population) {
