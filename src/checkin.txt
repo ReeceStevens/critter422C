@@ -15,7 +15,7 @@ Position will have:
 	(x,y) constructor;
 	public int getX();
 	public int getY();
-	public int distance(Position p);
+	public boolean adjacent(Position p);
 
 Each critter will have:
 	public void doTimeStep()
@@ -27,4 +27,18 @@ Each critter will have:
 	public void run()
 	public void reproduce()
 	public Position getPos()
-			
+
+Recitation Notes
+----------------
+
+worldTimeStep()
+	1. Remvoe dead critters
+	2. Call doTimeStep() for every critter
+	3. Orchestrate all fights
+	4. Deduct rest energy costs
+	5. Generate new algae
+	6. Add new babies into critter collection
+	Note: critters can only move physically once per time step, so if you move
+	into a fight, you can't run away in that same time step.	
+
+
