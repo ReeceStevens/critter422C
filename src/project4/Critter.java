@@ -269,7 +269,7 @@ public abstract class Critter {
 		// Draw Critters
 		for (Critter a : population) {
 			System.out.println("Algae at " + a.x_coord + ", " + a.y_coord + "!");
-			output[a.x_coord + 1][a.y_coord + 1] = a.toString();			
+			output[a.y_coord + 1][a.x_coord + 1] = a.toString();			
 		}
 		for (int i = 0; i < Params.world_height+2; i += 1) {
 			for (int j = 0; j < Params.world_width+2; j += 1) {
