@@ -1,5 +1,3 @@
-package project4;
-
 public class Craig extends Critter {
 	
 	@Override
