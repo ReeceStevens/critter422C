@@ -20,70 +20,122 @@ public class Main {
 		Scanner input = new Scanner(System.in);
 		while(true) {
 			System.out.print("Critter World > ");
-			String command = input.next();	
+			//String command = input.next();	
+			String command = input.nextLine();	
+			String[] arguments = command.split(" ");
 			command = command.toLowerCase();
 
-			switch (command) {
+			switch (arguments[0]) {
 				case "quit":
-					input.close();
+					if (arguments.length > 1) {
+						System.out.println("error processing: " + command);
+					}
+					else {
+						input.close();
+					}
 					return;
 
 				case "show":
-					Critter.displayWorld();
+					if (arguments.length > 1) {
+						System.out.println("error processing: " + command);
+					}
+					else {
+						Critter.displayWorld();
+					}
 					continue;
 
 				case "step":
-						String num_times = input.nextLine();
+
+					if (arguments.length > 2) {
+						System.out.println("error processing: " + command);
+					}
+					else {
 						Integer steps;
 						try {
-							steps = Integer.parseInt(num_times.substring(1));	
+							steps = Integer.parseInt(arguments[1]);
 							for (int i = 0; i < steps; i += 1) {
 								Critter.worldTimeStep();
 							}
-						} catch (NumberFormatException | StringIndexOutOfBoundsException e) {
-							Critter.worldTimeStep();
 						}
-						continue;
+						catch (IndexOutOfBoundsException e) {
+							Critter.worldTimeStep();
 
-				case "seed":
-					int seed_number = input.nextInt();
-					Critter.setSeed(seed_number);
+						} catch (NumberFormatException e ) {
+							System.out.println("error processing: " + command);
+						}
+					}
+					continue;
+
+				case "seed":	
+					if (arguments.length > 2) {
+						System.out.println("error processing: " + command);
+					}
+					else {
+						Integer seed_number;
+						try{
+							seed_number = Integer.parseInt(arguments[1]);
+							Critter.setSeed(seed_number);
+						} catch (IndexOutOfBoundsException e) {
+							System.out.println("error processing: " + command);
+						} catch (NumberFormatException e) {
+							System.out.println("error processing: " + command);
+						}
+					}
 					continue;
 
 				case "make":
-					String classname = input.next();
-					int num = input.nextInt();
-					for (int i = 0; i < num; i += 1) {
-						try {
-							Critter.makeCritter(classname);
-						} catch (InvalidCritterException e) {
-							e.printStackTrace();
+					if (arguments.length > 3) {
+						System.out.println("error processing: " + command);
+					}
+					else {
+						Integer num;
+						String classname = arguments[1];
+						try{
+							num = Integer.parseInt(arguments[2]);
+						} catch (NumberFormatException e) {
+							System.out.println("error processing: " + command);
+							continue;
+						}
+						for (int i = 0; i < num; i += 1) {
+							try {
+								Critter.makeCritter(classname);
+							} catch (InvalidCritterException e) {
+								System.out.println("" + classname + " is not a valid critter class.");
+								break;
+							}
 						}
 					}
 					continue;
 				
 				case "stats":
-					String requested_class = input.next();
-					List<Critter> instances = null;
-					try{
-						instances = Critter.getInstances(requested_class);	
-					} catch (InvalidCritterException e) {
-						e.printStackTrace();	
+					if (arguments.length > 2) {
+						System.out.println("error processing: " + command);
 					}
-					Class<?> critter_class = null;
-					Class [] paramList = new Class[1];
-					paramList[0] = java.util.List.class;
+					else {
+						String requested_class = arguments[1];
+						List<Critter> instances = null;
+						try{
+							instances = Critter.getInstances(requested_class);	
+						} catch (InvalidCritterException e) {
+							e.printStackTrace();	
+						}
+						Class<?> critter_class = null;
+						Class [] paramList = new Class[1];
+						paramList[0] = java.util.List.class;
 
-					try{
-						critter_class = Class.forName(requested_class);
-						java.lang.reflect.Method runStats = critter_class.getMethod("runStats", paramList);
-						runStats.invoke(critter_class, instances);
-					} catch (Exception e) {
-						e.printStackTrace();	
+						try{
+							critter_class = Class.forName(requested_class);
+							java.lang.reflect.Method runStats = critter_class.getMethod("runStats", paramList);
+							runStats.invoke(critter_class, instances);
+						} catch (Exception e) {
+							e.printStackTrace();	
+						}
 					}
 					continue;
-
+				default:
+					System.out.println("Invalid command: " + command);
 			}
+
 		}
 	}
 }
