@@ -43,7 +43,7 @@ public class ReeceCritter1 extends Critter {
 			gene = parent_gene + mutation;
 		} else {
 			gene = parent_gene - mutation; 
-			if (gene < 1) { gene = 1;}
+			if (gene < 0) { gene = 0;}
 		}
 	}
 
@@ -61,7 +61,7 @@ public class ReeceCritter1 extends Critter {
 			gene = parent_gene + mutation;
 		} else {
 			gene = parent_gene - mutation; 
-			if (gene < 1) { gene = 1;}
+			if (gene < 0) { gene = 0;}
 		}
 	}
 
@@ -92,20 +92,17 @@ public class ReeceCritter1 extends Critter {
 		int avg_age = 0;
 		int num_crits = 0;
 		int avg_energy = 0;
-		int avg_gene = 0;
 		for (Object obj : reece1) {
 			num_crits += 1;
 			ReeceCritter1 r = (ReeceCritter1) obj;
 			avg_age += r.age;
 			avg_energy += r.getEnergy();
-			avg_gene += r.gene;
 		}
 		avg_age /= num_crits;
 		avg_energy /= num_crits;
 		System.out.print("" + num_crits + " total ReeceCritter1s       ");
 		System.out.print("Average age: " + avg_age + "       ");
-		System.out.print("Average energy: " + avg_energy + "       ");
-		System.out.print("Average gene value: " + avg_gene + "\n");
+		System.out.print("Average energy: " + avg_energy + "\n");
 	}
 
 }
