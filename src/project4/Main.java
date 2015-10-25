@@ -84,7 +84,7 @@ public class Main {
 					continue;
 
 				case "make":
-					if (arguments.length > 3) {
+					if (arguments.length != 3) {
 						System.out.println("error processing: " + command);
 					}
 					else {
@@ -108,7 +108,7 @@ public class Main {
 					continue;
 				
 				case "stats":
-					if (arguments.length > 2) {
+					if (arguments.length != 2) {
 						System.out.println("error processing: " + command);
 					}
 					else {
