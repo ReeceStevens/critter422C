@@ -124,6 +124,38 @@ public abstract class Critter {
 
 	// Implemented per critter	
 	protected final void reproduce(Critter offspring, int direction) {
+		if(this.energy < Params.min_reproduce_energy) {
+			return;
+		}
+
+		offspring.energy = (this.energy / 2);
+		this.energy = Math.ceil(this.energy /2);
+		switch (direction) {
+			case 0: //move east one unit
+				offspring.x_coord = this.wrapX(1);
+				offspring.y_coord = this.y_coord;
+			case 1: //move northeast one unit
+				offspring.x_coord = this.wrapX(1);
+				offspring.y_coord = this.wrapY(-1);
+			case 2: //move north one unit
+				offspring.x_coord = this.x_coord;
+				offspring.y_coord = this.wrapY(-1);
+			case 3: //move northwest one unit
+				offspring.x_coord = this.wrapX(-1);
+				offspring.y_coord = this.wrapY(-1);
+			case 4: //move west one unit
+				offspring.x_coord = this.wrapX(-1);
+				offspring.y_coord = this.y_coord;
+			case 5: //move southwest one unit
+				offspring.x_coord = this.wrapX(-1);
+				offspring.y_coord = this.wrapY(1);
+			case 6: //move south one unit
+				offspring.x_coord = this.x_coord;
+				offspring.y_coord = this.wrapY(1);
+			case 7: //southeast one unit
+				offspring.x_coord = this.wrapX(1);
+				offspring.y_coord = this.wrapY(1);	
+		} 
 	}
 
 	// Implemented per critter	
