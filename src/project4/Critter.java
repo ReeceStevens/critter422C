@@ -39,14 +39,13 @@ public abstract class Critter {
 	public boolean isAlive() {
 		return alive;
 	}
-
 	
 	private int energy = 0;
 	protected int getEnergy() { return energy; }
 	
 	private int x_coord;
 	private int y_coord;
-	
+
 	//These two functions exist to implement the 2-D torus projection property of the world
 	private final int wrapX(int steps) {
 		if ((x_coord + steps) < 0){
@@ -199,6 +198,11 @@ public abstract class Critter {
 	 * so that they correctly update your grid/data structure.
 	 */
 	static abstract class TestCritter extends Critter {
+		@Override 
+		public boolean isAlive() {
+			return (super.energy > 0);
+		}
+
 		protected void setEnergy(int new_energy_value) {
 			super.energy = new_energy_value;
 		}
@@ -217,29 +221,63 @@ public abstract class Critter {
 
 		
 	public static void worldTimeStep() {
-		System.out.println("Population Size: " + population.size());
-		// 1. Remove dead critters
-		java.util.ArrayList<Critter> toRemove = new java.util.ArrayList<Critter>();
-		for (Critter a : population) {
-			if (!a.isAlive()) {
-				toRemove.add(a);
-			}	
-		}
-		System.out.println("Population Size: " + population.size());
-		for (Critter a : toRemove) {
-			population.remove(a);
-		}
-		// 2. call doTimeStep() for every critter
+		// 1. call doTimeStep() for every critter
 		for (Critter a: population) {
 			a.doTimeStep();
 		}	
-		// 3. Orchestrate all fights
-		
-		// 4. Deduct rest energy costs
+		// 2. Orchestrate all fights
+		// TODO: This is a terrible O(n^2) solution. Make it better.
+		for (Critter a: population) {
+			for (Critter b: population) {
+				if ((a.x_coord == b.x_coord ) && (a.y_coord == b.y_coord)) {
+					if (a.isAlive() && b.isAlive()){
+						// CONFLICT!
+						boolean a_fight = a.fight(b.toString());
+						boolean b_fight = b.fight(a.toString());
+						// If running away, a or b may die, or a or b may get away.
+						if ((a.x_coord == b.x_coord ) && (a.y_coord == b.y_coord)) {
+							if (a.isAlive() && b.isAlive()){
+							// If there's still a conflict, time to duke it out.
+							if (a_fight && b_fight) {
+								int a_roll = Critter.getRandomInt(a.energy);
+								int b_roll = Critter.getRandomInt(b.energy);
+								if (a_roll > b_roll) {
+									a.energy = a.energy + (b.energy)/2;
+									b.energy = 0;
+									b.alive = false;
+								} else if (b_roll > a_roll) {
+									b.energy = b.energy + (a.energy)/2;
+									a.energy = 0;
+									a.alive = false;
+								}
+								// Coin flip.
+								else {
+									int flip = Critter.getRandomInt(1);
+									if (flip == 1) {
+										// A wins
+										a.energy = a.energy + (b.energy)/2;
+										b.energy = 0;
+										b.alive = false;
+									}
+									else { 
+										// B wins
+										b.energy = b.energy + (a.energy)/2;
+										a.energy = 0;
+										a.alive = false;
+									}
+								}
+							}
+							}
+						}
+					}
+				}
+			}
+		}
+		// 3. Deduct rest energy costs
 		for (Critter a: population) {
 			a.energy = a.energy - Params.rest_energy_cost;
 		}	
-		// 5. Generate new algae
+		// 4. Generate new algae
 		for (int i  = 0; i < Params.refresh_algae_count; i += 1) {
 			try {
 				Critter.makeCritter("project4.Algae");
@@ -247,8 +285,23 @@ public abstract class Critter {
 				e.printStackTrace();
 			}
 		}	
-		// 6. Add new babies into critter collection
+		// 5. Add new babies into critter collection
+		for (Critter a : babies) {
+			population.add(a);
+		}
+		java.util.ArrayList<Critter> temp = new java.util.ArrayList<Critter>(babies);
+		babies.removeAll(temp);
 		
+		// 6. Remove dead critters
+		java.util.ArrayList<Critter> toRemove = new java.util.ArrayList<Critter>();
+		for (Critter a : population) {
+			if (!a.isAlive()) {
+				toRemove.add(a);
+			}	
+		}
+		for (Critter a : toRemove) {
+			population.remove(a);
+		}
 	}
 	
 	public static void displayWorld() {
@@ -275,7 +328,6 @@ public abstract class Critter {
 		}
 		// Draw Critters
 		for (Critter a : population) {
-			System.out.println("Algae at " + a.x_coord + ", " + a.y_coord + "!");
 			output[a.y_coord + 1][a.x_coord + 1] = a.toString();			
 		}
 		for (int i = 0; i < Params.world_height+2; i += 1) {
