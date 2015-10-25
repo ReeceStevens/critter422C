@@ -18,6 +18,21 @@ public class Main {
 	public static void main(String[] args) {
 		System.out.println("Welcome to Critter Park. Beware the Critters.");
 		Scanner input = new Scanner(System.in);
+
+		//TESTING ONLY
+		for (int i = 0; i < 100; i += 1) {
+			Critter.worldTimeStep();
+		}
+		for (int i = 0; i < 10; i += 1) {
+			try{
+			Critter.makeCritter("project4.ReeceCritter1");
+			Critter.makeCritter("project4.Craig");
+			} catch (InvalidCritterException e) {
+				e.printStackTrace();
+			}
+		}
+
+
 		while(true) {
 			System.out.print("Critter World > ");
 			//String command = input.next();	

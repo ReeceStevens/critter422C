@@ -179,7 +179,6 @@ public abstract class Critter {
 		if (!exists) { throw new InvalidCritterException(critter_class_name); }
 
 		// If critter is valid, instantiate it and put it in the population
-		// TODO: initialize the critter's position, etc.
 		try {
 			newCritterClass = Class.forName(critter_class_name);	
 			Constructor<?> constructor = null;
@@ -287,7 +286,9 @@ public abstract class Critter {
 		// 1. call doTimeStep() for every critter
 		for (Critter a: population) {
 			a.doTimeStep();
-			if (a.energy <= 0) { a.alive = false; }
+			if (a.energy <= 0) { 
+				a.alive = false; 
+			}
 		}	
 
 
@@ -366,27 +367,21 @@ public abstract class Critter {
 			}
 		}	
 		// 5. Add new babies into critter collection
-		int b = 0;
 		for (Critter a : babies) {
-			b ++;
+			a.alive = true;
 			population.add(a);
 		}
-		System.out.println("Adding " + b + " new babies.");
 		java.util.ArrayList<Critter> temp = new java.util.ArrayList<Critter>(babies);
 		babies.removeAll(temp);
 		
 		// 6. Remove dead critters
-		int i = 0;
 		java.util.ArrayList<Critter> toRemove = new java.util.ArrayList<Critter>();
 		for (Critter a : population) {
 			if (!a.isAlive() || a.energy <= 0) {
 				toRemove.add(a);
-				i ++;
 			}	
 		}
-		System.out.println("Removing " + i + " dead critters.");
 		for (Critter a : toRemove) {
-
 			population.remove(a);
 		}
 	}
