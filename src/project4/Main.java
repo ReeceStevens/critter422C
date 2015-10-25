@@ -31,7 +31,10 @@ public class Main {
 					continue;
 				// TODO: accept a number parameter to step
 				case "step":
-					Critter.worldTimeStep();
+					int num_times = input.nextInt();
+					for (int i = 0; i < num_times; i += 1) {
+						Critter.worldTimeStep();
+					}
 					continue;
 				case "seed":
 					int seed_number = input.nextInt();
@@ -39,7 +42,17 @@ public class Main {
 					continue;
 				// TODO: implement make
 				// 	Syntax: make <classname> <number>
-				//case "make":
+				case "make":
+					String classname = input.next();
+					int num = input.nextInt();
+					for (int i = 0; i < num; i += 1) {
+						try {
+							Critter.makeCritter(classname);
+						} catch (InvalidCritterException e) {
+							e.printStackTrace();
+						}
+					}
+					continue;
 				
 				case "stats":
 					String requested_class = input.next();
