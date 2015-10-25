@@ -40,19 +40,19 @@ public class AjayCritter1 extends Critter {
 			hasMoved = false;
 		}
 
-		if (getEnergy() >= 20 && getEnergy() < 60) {
+		if (getEnergy() >= 20 && getEnergy() < 100) {
 			walk(dir);
 			hasMoved = true;
 		}
 
-		if(getEnergy() >= 100 && getEnergy() < 150) {
+		if(getEnergy() >= 100 && getEnergy() < 120) {
 			walk(dir);
 			hasMoved = true;
 			AjayCritter1 baby = new AjayCritter1();
 			reproduce(baby, Critter.getRandomInt(8));
 		}
 
-		if(getEnergy() >= 150){
+		if(getEnergy() >= 120){
 			AjayCritter1 baby = new AjayCritter1();
 			reproduce(baby, Critter.getRandomInt(8));
 		}
