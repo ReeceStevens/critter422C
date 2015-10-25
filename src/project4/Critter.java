@@ -128,7 +128,7 @@ public abstract class Critter {
 		}
 
 		offspring.energy = (this.energy / 2);
-		this.energy = Math.ceil(this.energy /2);
+		this.energy = (int) Math.ceil(this.energy /2);
 		switch (direction) {
 			case 0: //move east one unit
 				offspring.x_coord = this.wrapX(1);
@@ -155,6 +155,7 @@ public abstract class Critter {
 				offspring.x_coord = this.wrapX(1);
 				offspring.y_coord = this.wrapY(1);	
 		} 
+		babies.add(offspring);
 	}
 
 	// Implemented per critter	
@@ -200,9 +201,20 @@ public abstract class Critter {
 		}
 	}
 
-	// TODO: FINISH THIS METHOD. Return the list of all instances of the given class.	
 	public static List<Critter> getInstances(String critter_class_name) throws InvalidCritterException {
+		Class<?> crit_class = null;
+		try {
+			crit_class = Class.forName(critter_class_name);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 		List<Critter> result = new java.util.ArrayList<Critter>();
+
+		for (Critter a : population) {
+			if (crit_class.isInstance(a)) {
+				result.add(a);
+			}
+		}
 		return result;
 	}
 	
@@ -269,7 +281,6 @@ public abstract class Critter {
 
 		// 2. Orchestrate all fights
 		// TODO: This is a terrible O(n^2) solution. Make it better.
-		
 		for (Critter a: population) {
 			for (Critter b: population) {
 				if (a == b) { continue; }
@@ -337,9 +348,12 @@ public abstract class Critter {
 			}
 		}	
 		// 5. Add new babies into critter collection
+		int b = 0;
 		for (Critter a : babies) {
+			b ++;
 			population.add(a);
 		}
+		System.out.println("Adding " + b + " new babies.");
 		java.util.ArrayList<Critter> temp = new java.util.ArrayList<Critter>(babies);
 		babies.removeAll(temp);
 		

@@ -25,23 +25,31 @@ public class Main {
 
 			switch (command) {
 				case "quit":
+					input.close();
 					return;
+
 				case "show":
 					Critter.displayWorld();
 					continue;
-				// TODO: accept a number parameter to step
+
 				case "step":
-					int num_times = input.nextInt();
-					for (int i = 0; i < num_times; i += 1) {
-						Critter.worldTimeStep();
-					}
-					continue;
+						String num_times = input.nextLine();
+						Integer steps;
+						try {
+							steps = Integer.parseInt(num_times.substring(1));	
+							for (int i = 0; i < steps; i += 1) {
+								Critter.worldTimeStep();
+							}
+						} catch (NumberFormatException | StringIndexOutOfBoundsException e) {
+							Critter.worldTimeStep();
+						}
+						continue;
+
 				case "seed":
 					int seed_number = input.nextInt();
 					Critter.setSeed(seed_number);
 					continue;
-				// TODO: implement make
-				// 	Syntax: make <classname> <number>
+
 				case "make":
 					String classname = input.next();
 					int num = input.nextInt();
@@ -63,10 +71,13 @@ public class Main {
 						e.printStackTrace();	
 					}
 					Class<?> critter_class = null;
-					// TODO: does this method reflection even work???
+					Class [] paramList = new Class[1];
+					paramList[0] = java.util.List.class;
+
 					try{
 						critter_class = Class.forName(requested_class);
-						java.lang.reflect.Method runStats = critter_class.getMethod("runStats", instances.getClass());
+						java.lang.reflect.Method runStats = critter_class.getMethod("runStats", paramList);
+						runStats.invoke(critter_class, instances);
 					} catch (Exception e) {
 						e.printStackTrace();	
 					}
@@ -75,5 +86,4 @@ public class Main {
 			}
 		}
 	}
-
 }

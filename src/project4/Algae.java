@@ -15,4 +15,8 @@ public class Algae extends TestCritter {
 	public void doTimeStep() {
 		setEnergy(getEnergy() + Params.photosynthesis_energy_amount);
 	}
+
+	public static void runStats(java.util.List<Critter> algaes) {
+		Critter.runStats(algaes);
+	}
 }
