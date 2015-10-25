@@ -270,6 +270,18 @@ public abstract class Critter {
 	private	static List<Critter> population = new java.util.ArrayList<Critter>();
 	private static List<Critter> babies = new java.util.ArrayList<Critter>();
 
+	/*
+	 * Tells if this space in the world is occupied by another critter
+	 */
+	private boolean isOccupied() {
+		for (Critter a : population) {
+			if (a == this) { continue; }
+			if ((a.x_coord == this.x_coord) && (a.y_coord == this.y_coord)) {
+				return true;
+			}
+		}
+		return false;
+	}
 		
 	public static void worldTimeStep() {
 		// 1. call doTimeStep() for every critter
@@ -287,10 +299,16 @@ public abstract class Critter {
 				if ((a.x_coord == b.x_coord ) && (a.y_coord == b.y_coord)) {
 					if (a.isAlive() && b.isAlive()){
 						// CONFLICT!
+						int x = a.x_coord;
+						int y = a.y_coord;
 						boolean a_fight = a.fight(b.toString());
 						if (a.energy <= 0) { a.alive = false; }
+						if (a.isOccupied()) { a.x_coord = x; a.y_coord = y; }
+						x = b.x_coord;
+						y = b.y_coord;
 						boolean b_fight = b.fight(a.toString());
 						if (b.energy <= 0) { b.alive = false; }
+						if (b.isOccupied()) { b.x_coord = x; b.y_coord = y; }
 						// If running away, a or b may die, or a or b may get away.
 						if ((a.x_coord == b.x_coord ) && (a.y_coord == b.y_coord)) {
 							if (a.isAlive() && b.isAlive()){

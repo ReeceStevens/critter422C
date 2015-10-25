@@ -119,6 +119,11 @@ public class Main {
 						} catch (InvalidCritterException e) {
 							e.printStackTrace();	
 						}
+						// No instances of the class are alive.
+						if (instances.size() <= 0) {
+							System.out.println("No instances of " + requested_class + " are alive.");
+							continue;
+						}
 						Class<?> critter_class = null;
 						Class [] paramList = new Class[1];
 						paramList[0] = java.util.List.class;
