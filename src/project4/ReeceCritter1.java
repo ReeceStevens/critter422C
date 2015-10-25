@@ -19,14 +19,17 @@ public class ReeceCritter1 extends Critter {
 	@Override 
 	public String toString() { return "R"; }
 
-	
+
+	public boolean fight(String enemy) { return true; }
+
+	/*
 	public boolean fight(String enemy) {
 		if ((getEnergy() < 70) && (getEnergy() > 30)) { 
 			walk(dir);
 			return false;
 		}	
 		else { return true; }
-	}
+	} */
 
 	public ReeceCritter1() {
 		dir = Critter.getRandomInt(8);
@@ -48,7 +51,7 @@ public class ReeceCritter1 extends Critter {
 			}
 		}
 		// Figure out whether to reproduce
-		if (getEnergy() > 120) {
+		if (getEnergy() > 180) {
 			ReeceCritter1 newReece1 = new ReeceCritter1();
 			reproduce(newReece1, Critter.getRandomInt(8));
 		}	

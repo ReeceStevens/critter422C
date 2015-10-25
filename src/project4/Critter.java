@@ -45,6 +45,7 @@ public abstract class Critter {
 	
 	private int x_coord;
 	private int y_coord;
+	private boolean hasMoved;
 
 	//These two functions exist to implement the 2-D torus projection property of the world
 	private final int wrapX(int steps) {
@@ -69,6 +70,7 @@ public abstract class Critter {
 
 	// Implemented per critter	
 	protected final void walk(int direction) {
+		if (this.hasMoved) { return; }
 		switch (direction) {
 			case 0: //move east one unit
 				x_coord = wrapX(1);
@@ -92,10 +94,12 @@ public abstract class Critter {
 				y_coord = wrapY(1);	
 		}
 		energy -= Params.walk_energy_cost;
+		this.hasMoved = true;
 	}
 
 	// Implemented per critter	
 	protected final void run(int direction) {	
+		if (this.hasMoved) { return; }
 		switch (direction) {
 			case 0: //move east two units
 				x_coord = wrapX(2);
@@ -119,6 +123,7 @@ public abstract class Critter {
 				y_coord = wrapY(2);	
 		}
 		energy -= Params.run_energy_cost;
+		this.hasMoved = true;
 	}
 
 	// Implemented per critter	
@@ -286,6 +291,7 @@ public abstract class Critter {
 		// 1. call doTimeStep() for every critter
 		for (Critter a: population) {
 			a.doTimeStep();
+			a.hasMoved = false;
 			if (a.energy <= 0) { 
 				a.alive = false; 
 			}
