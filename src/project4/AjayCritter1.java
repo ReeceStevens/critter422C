@@ -35,7 +35,7 @@ public class AjayCritter1 extends Critter {
 	public void doTimeStep() {
 
 		hasMoved = false;
-		if(getEnergy < 20) {
+		if(getEnergy() < 20) {
 			run(dir);
 			hasMoved = false;
 		}
@@ -58,13 +58,14 @@ public class AjayCritter1 extends Critter {
 		}
 
 		//new direction chosen at random
-		dir = getEnergy * Critter.getRandomInt(8) % 8;
+		dir = getEnergy() * Critter.getRandomInt(8) % 8;
 	}
 	
 
 	public static void runStats(java.util.List<Critter> ajaycritters1) {
 		int total_fights = 0 ;
-		for(AjayCritter1 crit : ajaycritters1) {
+		for(Object obj : ajaycritters1) {
+			AjayCritter1 crit = (AjayCritter1) obj;
 			total_fights += crit.numFights;
 		}
 		System.out.println("Total number of AjayCritter1s: " + ajaycritters1.size());
