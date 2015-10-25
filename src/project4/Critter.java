@@ -1,13 +1,13 @@
 /* CRITTERS Critter.java
  * EE422C Project 4 submission by
  * Replace <...> with your actual data.
- * <Student1 Name>
- * <Student1 EID>
+ * Reece Stevens
+ * rgs835
  * <Student1 5-digit Unique No.>
- * <Student2 Name>
+ * Ajay Rastogi
  * <Student2 EID>
  * <Student2 5-digit Unique No.>
- * Slip days used: <0>
+ * Slip days used: 0
  * Fall 2015
  */
 package project4;
@@ -153,6 +153,13 @@ public abstract class Critter {
 			constructor = newCritterClass.getConstructor();	
 			Object newCritter = null;
 			newCritter = constructor.newInstance();
+
+			// Critter Initialization
+			((Critter) newCritter).x_coord = Critter.getRandomInt(Params.world_width);
+			((Critter) newCritter).y_coord = Critter.getRandomInt(Params.world_height);
+			((Critter) newCritter).alive = true;
+			((Critter) newCritter).energy = Params.start_energy;
+
 			// Add critter to bulk population
 			population.add((Critter) newCritter);
 		} catch (Exception e) {
@@ -224,35 +231,47 @@ public abstract class Critter {
 		// 1. call doTimeStep() for every critter
 		for (Critter a: population) {
 			a.doTimeStep();
+			if (a.energy <= 0) { a.alive = false; }
 		}	
+
+
 		// 2. Orchestrate all fights
 		// TODO: This is a terrible O(n^2) solution. Make it better.
+		
 		for (Critter a: population) {
 			for (Critter b: population) {
+				if (a == b) { continue; }
 				if ((a.x_coord == b.x_coord ) && (a.y_coord == b.y_coord)) {
 					if (a.isAlive() && b.isAlive()){
 						// CONFLICT!
 						boolean a_fight = a.fight(b.toString());
+						if (a.energy <= 0) { a.alive = false; }
 						boolean b_fight = b.fight(a.toString());
+						if (b.energy <= 0) { b.alive = false; }
 						// If running away, a or b may die, or a or b may get away.
 						if ((a.x_coord == b.x_coord ) && (a.y_coord == b.y_coord)) {
 							if (a.isAlive() && b.isAlive()){
 							// If there's still a conflict, time to duke it out.
-							if (a_fight && b_fight) {
-								int a_roll = Critter.getRandomInt(a.energy);
-								int b_roll = Critter.getRandomInt(b.energy);
+								int a_roll, b_roll;
+								if (a_fight) { a_roll = Critter.getRandomInt(a.energy);}
+								else { a_roll = 0; }
+								if (b_fight) {b_roll = Critter.getRandomInt(b.energy);}
+								else { b_roll = 0; }
+
 								if (a_roll > b_roll) {
+									// A wins
 									a.energy = a.energy + (b.energy)/2;
 									b.energy = 0;
 									b.alive = false;
 								} else if (b_roll > a_roll) {
+									// B wins
 									b.energy = b.energy + (a.energy)/2;
 									a.energy = 0;
 									a.alive = false;
 								}
 								// Coin flip.
 								else {
-									int flip = Critter.getRandomInt(1);
+									int flip = Critter.getRandomInt(2);
 									if (flip == 1) {
 										// A wins
 										a.energy = a.energy + (b.energy)/2;
@@ -267,12 +286,12 @@ public abstract class Critter {
 									}
 								}
 							}
-							}
 						}
 					}
 				}
 			}
-		}
+		} 
+
 		// 3. Deduct rest energy costs
 		for (Critter a: population) {
 			a.energy = a.energy - Params.rest_energy_cost;
@@ -293,13 +312,17 @@ public abstract class Critter {
 		babies.removeAll(temp);
 		
 		// 6. Remove dead critters
+		int i = 0;
 		java.util.ArrayList<Critter> toRemove = new java.util.ArrayList<Critter>();
 		for (Critter a : population) {
-			if (!a.isAlive()) {
+			if (!a.isAlive() || a.energy <= 0) {
 				toRemove.add(a);
+				i ++;
 			}	
 		}
+		System.out.println("Removing " + i + " dead critters.");
 		for (Critter a : toRemove) {
+
 			population.remove(a);
 		}
 	}

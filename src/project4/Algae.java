@@ -5,10 +5,6 @@ import project4.Critter.TestCritter;
 public class Algae extends TestCritter {
 
 	public Algae() {
-		int x = Critter.getRandomInt(Params.world_width-1);
-		int y = Critter.getRandomInt(Params.world_height-1);
-		this.setXCoord(x);
-		this.setYCoord(y);
 		this.setEnergy(Params.start_energy);
 	}
 
