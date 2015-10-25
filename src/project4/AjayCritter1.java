@@ -37,7 +37,7 @@ public class AjayCritter1 extends Critter {
 		hasMoved = false;
 		if(getEnergy < 20) {
 			run(dir);
-			hasMoved == false;
+			hasMoved = false;
 		}
 
 		if (getEnergy() >= 20 && getEnergy() < 60) {
@@ -49,12 +49,12 @@ public class AjayCritter1 extends Critter {
 			walk(dir);
 			hasMoved = true;
 			AjayCritter1 baby = new AjayCritter1();
-			reproduce(baby, Critter.getRandomInt(8);
+			reproduce(baby, Critter.getRandomInt(8));
 		}
 
 		if(getEnergy() >= 150){
 			AjayCritter1 baby = new AjayCritter1();
-			reproduce(baby, Critter.getRandomInt(8);
+			reproduce(baby, Critter.getRandomInt(8));
 		}
 
 		//new direction chosen at random
@@ -70,7 +70,5 @@ public class AjayCritter1 extends Critter {
 		System.out.println("Total number of AjayCritter1s: " + ajaycritters1.size());
 		System.out.println("Total number of fights: " + total_fights);
 	}
-
-
-
+}
 
