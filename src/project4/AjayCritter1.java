@@ -17,6 +17,9 @@ public class AjayCritter1 extends Critter {
 	}
 	
 	public boolean fight(String opponent) {
+		if (opponent.equals("project4.Alage")) {
+			return true;
+		}
 		if (hasMoved == false) {
 			if(getEnergy() >= 100) {
 				numFights += 1;
@@ -37,7 +40,7 @@ public class AjayCritter1 extends Critter {
 		hasMoved = false;
 		if(getEnergy() < 20) {
 			run(dir);
-			hasMoved = false;
+			hasMoved = true;
 		}
 
 		if (getEnergy() >= 20 && getEnergy() < 100) {
