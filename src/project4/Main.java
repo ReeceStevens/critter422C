@@ -1,10 +1,10 @@
 /* CRITTERS Main.java
  * EE422C Project 4 submission by
  * Replace <...> with your actual data.
- * <Student1 Name>
- * <Student1 EID>
+ * Reece Stevens
+ * rgs835
  * <Student1 5-digit Unique No.>
- * <Student2 Name>
+ * Ajay Rastogi
  * <Student2 EID>
  * <Student2 5-digit Unique No.>
  * Slip days used: <0>
@@ -26,6 +26,7 @@ public class Main {
 		for (int i = 0; i < 10; i += 1) {
 			try{
 			Critter.makeCritter("project4.ReeceCritter1");
+			Critter.makeCritter("project4.ReeceCritter2");
 			Critter.makeCritter("project4.Craig");
 			Critter.makeCritter("project4.AjayCritter1");
 			} catch (InvalidCritterException e) {

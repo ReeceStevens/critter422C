@@ -21,7 +21,7 @@ import java.util.List;
  */
 public abstract class Critter {
 
-	private static String [] validCritters = { "project4.Algae", "project4.Craig", "project4.ReeceCritter1", "project4.ReeceCritter2", "project4.AjayCritter1", "project4.AjayCritter2" };
+	private static String [] validCritters = { "project4.Algae", "project4.Craig", "project4.ReeceCritter1", "project4.ReeceCritter2", "project4.AjayCritter1", "project4.AjayCritter2", "project4.Craig2" };
 
 	private static java.util.Random rand = new java.util.Random();
 	public static int getRandomInt(int max) {
