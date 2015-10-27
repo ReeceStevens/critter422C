@@ -4,7 +4,7 @@ package project4;
 public class AjayCritter2 extends Critter {
 
 	@Override
-	public String toString() {return "X";}
+	public String toString() {return "X";} //"a" is too hard to discern from "@"
 
 	private int age;
 	private int dir;
