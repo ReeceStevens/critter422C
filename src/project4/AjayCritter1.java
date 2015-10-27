@@ -17,7 +17,7 @@ public class AjayCritter1 extends Critter {
 	}
 	
 	public boolean fight(String opponent) {
-		if (opponent.equals("project4.Alage")) {
+		if (opponent.equals("project4.Alage")) { //always fight (eat) algae
 			return true;
 		}
 		if (hasMoved == false) {
@@ -25,7 +25,7 @@ public class AjayCritter1 extends Critter {
 				numFights += 1;
 				return true;
 			}
-			else if(getEnergy() < 100) {
+			else if(getEnergy() < 100) { //not that strong...try to run and find an empty space/algae
 				walk(dir);
 				return false;
 			}
@@ -38,24 +38,24 @@ public class AjayCritter1 extends Critter {
 	public void doTimeStep() {
 
 		hasMoved = false;
-		if(getEnergy() < 20) {
+		if(getEnergy() < 20) { //running low on energy...must run to find food ASAP
 			run(dir);
 			hasMoved = true;
 		}
 
-		if (getEnergy() >= 20 && getEnergy() < 100) {
+		if (getEnergy() >= 20 && getEnergy() < 100) { //decent energy...walk to find food
 			walk(dir);
 			hasMoved = true;
 		}
 
-		if(getEnergy() >= 100 && getEnergy() < 120) {
+		if(getEnergy() >= 100 && getEnergy() < 120) { //good energy..should still walk to find food, but can also reproduce
 			walk(dir);
 			hasMoved = true;
 			AjayCritter1 baby = new AjayCritter1();
 			reproduce(baby, Critter.getRandomInt(8));
 		}
 
-		if(getEnergy() >= 120){
+		if(getEnergy() >= 120){ //excellent energy...no need to walk, just reproduce
 			AjayCritter1 baby = new AjayCritter1();
 			reproduce(baby, Critter.getRandomInt(8));
 		}

@@ -29,6 +29,7 @@ public class Main {
 			Critter.makeCritter("project4.ReeceCritter2");
 			Critter.makeCritter("project4.Craig");
 			Critter.makeCritter("project4.AjayCritter1");
+			Critter.makeCritter("project4.AjayCritter2");
 			} catch (InvalidCritterException e) {
 				e.printStackTrace();
 			}
