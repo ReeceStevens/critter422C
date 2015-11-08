@@ -1,164 +1,92 @@
-/* CRITTERS Main.java
- * EE422C Project 4 submission by
- * Replace <...> with your actual data.
- * Reece Stevens
- * rgs835
- * <Student1 5-digit Unique No.>
- * Ajay Rastogi
- * <Student2 EID>
- * <Student2 5-digit Unique No.>
- * Slip days used: <0>
- * Fall 2015
- */
 package project5;
-import java.util.*;
+	
+import javafx.application.Application;
+import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
+import javafx.geometry.Insets;
+import javafx.geometry.Pos;
+import javafx.scene.Scene;
+import javafx.scene.control.Button;
+import javafx.scene.control.Label;
+import javafx.scene.control.TextField;
+import javafx.scene.layout.GridPane;
+import javafx.scene.layout.HBox;
+import javafx.scene.paint.Color;
+import javafx.scene.text.Text;
+import javafx.stage.Stage;
 
-public class Main {
 
+public class Main extends Application {
+	@Override
+	public void start(Stage primaryStage) {
+		try {
+			primaryStage.setTitle("Java FX Critters");
+			
+			// Add a grid pane to lay out the buttons and text fields.
+			GridPane grid = new GridPane();
+			grid.setAlignment(Pos.CENTER);
+			grid.setHgap(10);
+			grid.setVgap(10);
+			grid.setPadding(new Insets(25, 25, 25, 25));
+			
+			int row = 0;
+			
+			// Add Field for Critter type.
+			Label critName = new Label("Critter Name (e.g. Algae):");
+			grid.add(critName, 0, row);
+			TextField critNameField = new TextField();
+			//row++;
+			grid.add(critNameField, 1, row);
+			
+			// Add Field for No. of Critters
+			Label numCrits = new Label("No of critters:");
+			row++;
+			grid.add(numCrits, 0, row);
+			TextField critNumField = new TextField();
+			//row++;
+			grid.add(critNumField, 1, row);
+			
+			// Add Button to add Critters.
+			Button addBtn = new Button("Add critters");
+			HBox hbAddBtn = new HBox(10);
+			hbAddBtn.setAlignment(Pos.BOTTOM_RIGHT);
+			hbAddBtn.getChildren().add(addBtn);
+			row += 2;
+			grid.add(hbAddBtn, 1, row);
+			
+			// Action when Add Critters Button is pressed.
+			final Text actionTarget = new Text();
+			row += 2;
+			grid.add(actionTarget, 1, row);
+			
+			//grid.setGridLinesVisible(true);
+			
+			Scene scene = new Scene(grid, 500, 1000);
+			primaryStage.setScene(scene);
+			primaryStage.show();
+			
+			// Action when add critters button is pressed. Call makeCritter.
+			// Uses something called an anonymous class of type EventHandler<ActionEvent>, which is a class that is
+			// defined inline, in the curly braces.
+			addBtn.setOnAction(new EventHandler<ActionEvent>() {
+				@Override
+				public void handle(ActionEvent event) {
+					String name = critNameField.getText();
+					String numString = critNumField.getText();
+					//TODO: Call Critter.makeCritter as many times as requested.		
+					actionTarget.setFill(Color.FIREBRICK);
+					actionTarget.setText("TODO: message to display how many Critters added etc.");	
+					Critter.displayWorld(); // Optional
+				}			
+			});
+			
+
+		} catch(Exception e) {
+			e.printStackTrace();		
+		}
+	}
+	
 	public static void main(String[] args) {
-		System.out.println("Welcome to Critter Park. Beware the Critters.");
-		Scanner input = new Scanner(System.in);
-
-		//TESTING ONLY
-		/*for (int i = 0; i < 100; i += 1) {
-			Critter.worldTimeStep();
-		}
-		for (int i = 0; i < 10; i += 1) {
-			try{
-			Critter.makeCritter("project5.ReeceCritter1");
-			Critter.makeCritter("project5.ReeceCritter2");
-			Critter.makeCritter("project5.Craig");
-			Critter.makeCritter("project5.AjayCritter1");
-			Critter.makeCritter("project5.AjayCritter2");
-			} catch (InvalidCritterException e) {
-				e.printStackTrace();
-			}
-		} */
-
-
-		while(true) {
-			System.out.print("Critter World > ");
-			//String command = input.next();	
-			String command = input.nextLine();	
-			String[] arguments = command.split(" ");
-			command = command.toLowerCase();
-
-			switch (arguments[0]) {
-				case "quit":
-					if (arguments.length > 1) {
-						System.out.println("error processing: " + command);
-					}
-					else {
-						input.close();
-					}
-					return;
-
-				case "show":
-					if (arguments.length > 1) {
-						System.out.println("error processing: " + command);
-					}
-					else {
-						Critter.displayWorld();
-					}
-					continue;
-
-				case "step":
-
-					if (arguments.length > 2) {
-						System.out.println("error processing: " + command);
-					}
-					else {
-						Integer steps;
-						try {
-							steps = Integer.parseInt(arguments[1]);
-							for (int i = 0; i < steps; i += 1) {
-								Critter.worldTimeStep();
-							}
-						}
-						catch (IndexOutOfBoundsException e) {
-							Critter.worldTimeStep();
-
-						} catch (NumberFormatException e ) {
-							System.out.println("error processing: " + command);
-						}
-					}
-					continue;
-
-				case "seed":	
-					if (arguments.length > 2) {
-						System.out.println("error processing: " + command);
-					}
-					else {
-						Integer seed_number;
-						try{
-							seed_number = Integer.parseInt(arguments[1]);
-							Critter.setSeed(seed_number);
-						} catch (IndexOutOfBoundsException e) {
-							System.out.println("error processing: " + command);
-						} catch (NumberFormatException e) {
-							System.out.println("error processing: " + command);
-						}
-					}
-					continue;
-
-				case "make":
-					if (arguments.length != 3) {
-						System.out.println("error processing: " + command);
-					}
-					else {
-						Integer num;
-						String classname = arguments[1];
-						try{
-							num = Integer.parseInt(arguments[2]);
-						} catch (NumberFormatException e) {
-							System.out.println("error processing: " + command);
-							continue;
-						}
-						for (int i = 0; i < num; i += 1) {
-							try {
-								Critter.makeCritter(classname);
-							} catch (InvalidCritterException e) {
-								System.out.println("" + classname + " is not a valid critter class.");
-								break;
-							}
-						}
-					}
-					continue;
-				
-				case "stats":
-					if (arguments.length != 2) {
-						System.out.println("error processing: " + command);
-					}
-					else {
-						String requested_class = arguments[1];
-						List<Critter> instances = null;
-						try{
-							instances = Critter.getInstances(requested_class);	
-						} catch (InvalidCritterException e) {
-							e.printStackTrace();	
-						}
-						// No instances of the class are alive.
-						if (instances.size() <= 0) {
-							System.out.println("No instances of " + requested_class + " are alive.");
-							continue;
-						}
-						Class<?> critter_class = null;
-						Class [] paramList = new Class[1];
-						paramList[0] = java.util.List.class;
-
-						try{
-							critter_class = Class.forName(requested_class);
-							java.lang.reflect.Method runStats = critter_class.getMethod("runStats", paramList);
-							runStats.invoke(critter_class, instances);
-						} catch (Exception e) {
-							e.printStackTrace();	
-						}
-					}
-					continue;
-				default:
-					System.out.println("Invalid command: " + command);
-			}
-
-		}
+		launch(args);
 	}
 }

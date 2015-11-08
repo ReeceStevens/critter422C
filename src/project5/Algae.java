@@ -1,6 +1,6 @@
 package project5;
 
-import project4.Critter.TestCritter;
+import project5.Critter.TestCritter;
 
 public class Algae extends TestCritter {
 
