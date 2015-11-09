@@ -4,6 +4,7 @@ public class Craig extends Critter {
 	
 	@Override
 	public String toString() { return "C"; }
+	public String stringRepresentation() { return "project5.Craig"; }
 	
 	private static final int GENE_TOTAL = 24;
 	private int[] genes = new int[8];

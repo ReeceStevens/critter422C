@@ -9,6 +9,7 @@ public class Algae extends TestCritter {
 	}
 
 	public String toString() { return "@"; }
+	public String stringRepresentation() { return "project5.Algae";}
 	
 	public boolean fight(String not_used) { return false; }
 	

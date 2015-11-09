@@ -6,6 +6,8 @@ public class AjayCritter2 extends Critter {
 	@Override
 	public String toString() {return "X";} //"a" is too hard to discern from "@"
 
+	public String stringRepresentation() { return "project5.AjayCritter2";}
+
 	private int age;
 	private int dir;
 	private int prev_dir;

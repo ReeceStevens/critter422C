@@ -68,6 +68,8 @@ public abstract class Critter {
 		else {return y_coord += steps;}
 	}
 
+
+	// TODO: Fix the directionality of our critters
 	// Implemented per critter	
 	protected final void walk(int direction) {
 		if (this.hasMoved) { return; }
@@ -126,6 +128,45 @@ public abstract class Critter {
 		this.hasMoved = true;
 	}
 
+	//TODO: complete this method
+	//Must look in direction either 1 or 2 steps and see if it is occupied.
+	//If it's occupied, return the string of the class of the critter.
+	protected String look(int direction, boolean steps) {
+		int loc_x = 0;
+		int loc_y = 0;
+	    int	i = 0;		
+		if (steps) { i = 1; } else { i = 2; } 	
+		switch (direction) {
+			case 0: //move east two units
+				loc_x = wrapX(i);
+			case 1: //move northeast two units
+				loc_x = wrapX(i);
+				loc_y = wrapY(-i);
+			case 2: //move north two units
+				loc_y = wrapY(-i);
+			case 3: //move northwest two units
+				loc_x = wrapX(-i);
+				loc_y = wrapY(-i);
+			case 4: //move west two units
+				loc_x = wrapX(-i);
+			case 5: //move southwest two units
+				loc_x = wrapX(-i);
+				loc_y = wrapY(i);
+			case 6: //move south two units
+				loc_y = wrapY(i);
+			case 7: //southeast two units
+				loc_x = wrapX(i);
+				loc_y = wrapY(i);	
+		}
+		this.energy -= Params.look_energy_cost;
+		for (Critter a : population) {
+			if ((a.x_coord == loc_x) && (a.y_coord == loc_y)) {
+				return a.stringRepresentation();
+			}
+		}
+		return null;	
+	}
+
 	// Implemented per critter	
 	protected final void reproduce(Critter offspring, int direction) {
 		if(this.energy < Params.min_reproduce_energy) {
@@ -168,7 +209,8 @@ public abstract class Critter {
 
 	// Implemented per critter	
 	public abstract boolean fight(String oponent);
-	
+
+	public abstract String stringRepresentation();	
 	/* create and initialize a Critter subclass
 	 * critter_class_name must be the name of a concrete subclass of Critter, if not
 	 * an InvalidCritterException must be thrown

@@ -24,6 +24,8 @@ public class ReeceCritter1 extends Critter {
 	@Override 
 	public String toString() { return "B"; }
 
+	public String stringRepresentation() { return "project5.ReeceCritter1";}
+
 	public ReeceCritter1() {
 		dir = Critter.getRandomInt(8);
 		age = 0;

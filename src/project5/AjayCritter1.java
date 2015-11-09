@@ -5,6 +5,8 @@ public class AjayCritter1 extends Critter {
 	@Override
 	public String toString() {return "A";}
 
+	public String stringRepresentation() { return "project5.AjayCritter1";}
+
 	private int dir;
 	private int numFights;
 	private boolean hasMoved;

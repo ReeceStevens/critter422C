@@ -17,10 +17,28 @@ import javafx.stage.Stage;
 
 
 public class Main extends Application {
+	private boolean first_click = true;
+
+	public static GridPane map = new GridPane();
+	
+	public void displayWorld(Stage critterStage) {
+		critterStage.setTitle("Critter World");
+		GridPane crit_grid = new GridPane();
+		crit_grid.setAlignment(Pos.CENTER);
+		Label title = new Label("Welcome To Critter World");
+		crit_grid.add(title,0,0);
+		
+		Scene scene = new Scene(crit_grid, 500, 500);
+		critterStage.setScene(scene);
+		critterStage.show();
+	}
+
 	@Override
 	public void start(Stage primaryStage) {
 		try {
-			primaryStage.setTitle("Java FX Critters");
+			primaryStage.setTitle("Initialization Settings");
+			Stage critterStage = new Stage();
+
 			
 			// Add a grid pane to lay out the buttons and text fields.
 			GridPane grid = new GridPane();
@@ -61,7 +79,7 @@ public class Main extends Application {
 			
 			//grid.setGridLinesVisible(true);
 			
-			Scene scene = new Scene(grid, 500, 1000);
+			Scene scene = new Scene(grid, 500, 500);
 			primaryStage.setScene(scene);
 			primaryStage.show();
 			
@@ -73,10 +91,39 @@ public class Main extends Application {
 				public void handle(ActionEvent event) {
 					String name = critNameField.getText();
 					String numString = critNumField.getText();
-					//TODO: Call Critter.makeCritter as many times as requested.		
-					actionTarget.setFill(Color.FIREBRICK);
-					actionTarget.setText("TODO: message to display how many Critters added etc.");	
-					Critter.displayWorld(); // Optional
+					//TODO: make a more graceful error message if someone inputs an invalid critter type
+					if ((name == null)) {
+						actionTarget.setFill(Color.FIREBRICK);
+						actionTarget.setText("Please enter a critter class.");	
+						return;
+					}
+					if (numString == null) {
+						try {
+							Critter.makeCritter("project5.".concat(name));
+						} catch (InvalidCritterException e) {
+							actionTarget.setFill(Color.FIREBRICK);
+							actionTarget.setText("Please enter a valid critter class.");	
+						}
+					}
+					else {
+						try{ 
+							for (int i = 0; i < Integer.parseInt(numString); i += 1) {
+								try {
+									Critter.makeCritter("project5.".concat(name));
+								} catch (InvalidCritterException e) {
+									actionTarget.setFill(Color.FIREBRICK);
+									actionTarget.setText("Please enter a valid critter class.");	
+								}
+							}
+						} catch (NumberFormatException e) {
+							actionTarget.setFill(Color.FIREBRICK);
+							actionTarget.setText("Invalid number of critters. Please type an integer number of critters to add.");	
+							return;
+						}
+					}
+					//actionTarget.setFill(Color.FIREBRICK);
+					//actionTarget.setText("TODO: message to display how many Critters added etc.");	
+					displayWorld(critterStage);
 				}			
 			});
 			
