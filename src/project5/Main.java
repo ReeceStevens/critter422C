@@ -25,6 +25,7 @@ public class Main extends Application {
 	public static Stage critterStage;
 	
 	public static void displayWorld(Stage critterStage, Stage controlStage) {
+		// World Canvas
 		critterStage.setTitle("Critter World");
 		Canvas crit_canvas = new Canvas(500,500);
 		GraphicsContext gc = crit_canvas.getGraphicsContext2D();
