@@ -24,7 +24,7 @@ public class Main extends Application {
 	public static Stage controlStage;
 	public static Stage critterStage;
 	
-	public void displayWorld(Stage critterStage, Stage controlStage) {
+	public static void displayWorld(Stage critterStage, Stage controlStage) {
 		critterStage.setTitle("Critter World");
 		Canvas crit_canvas = new Canvas(500,500);
 		GraphicsContext gc = crit_canvas.getGraphicsContext2D();
@@ -41,7 +41,7 @@ public class Main extends Application {
 		control_grid.setAlignment(Pos.CENTER);
 		control_grid.setHgap(10);
 		control_grid.setVgap(10);
-		grid.setPadding(new Insets(25,25,25,25));
+		control_grid.setPadding(new Insets(25,25,25,25));
 		int row = 0;
 
 		// Add Field for Critter type.
@@ -76,7 +76,7 @@ public class Main extends Application {
 		controlStage.show();	
 	}
 
-	private void drawCritters(GraphicsContext gc) {
+	private static void drawCritters(GraphicsContext gc) {
 		return;	
 	}
 
