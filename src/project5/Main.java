@@ -1,6 +1,7 @@
 package project5;
-	
+
 import javafx.application.Application;
+import javafx.scene.Group;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.geometry.Insets;
@@ -13,24 +14,24 @@ import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Text;
+import javafx.scene.canvas.Canvas;
+import javafx.scene.canvas.GraphicsContext;
 import javafx.stage.Stage;
 
-
 public class Main extends Application {
-	private boolean first_click = true;
 
 	public static GridPane map = new GridPane();
 	public static Stage controlStage;
+	public static Stage critterStage;
 	
 	public void displayWorld(Stage critterStage, Stage controlStage) {
 		critterStage.setTitle("Critter World");
-		GridPane crit_grid = new GridPane();
-		crit_grid.setAlignment(Pos.CENTER);
-		Label title = new Label("Welcome To Critter World");
-		crit_grid.add(title,0,0);
-		
-		Scene scene = new Scene(crit_grid, 500, 500);
-		critterStage.setScene(scene);
+		Canvas crit_canvas = new Canvas(500,500);
+		GraphicsContext gc = crit_canvas.getGraphicsContext2D();
+		drawCritters(gc);
+		Group root = new Group();
+		root.getChildren().add(crit_canvas);
+		critterStage.setScene(new Scene(root));
 		critterStage.show();
 
 		// Controller
@@ -75,12 +76,16 @@ public class Main extends Application {
 		controlStage.show();	
 	}
 
+	private void drawCritters(GraphicsContext gc) {
+		return;	
+	}
+
 	@Override
 	public void start(Stage primaryStage) {
 		try {
 			primaryStage.setTitle("Initialization Settings");
-			Stage critterStage = new Stage();
 			controlStage = new Stage();
+			critterStage = new Stage();
 			
 			// Add a grid pane to lay out the buttons and text fields.
 			GridPane grid = new GridPane();
