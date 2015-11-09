@@ -435,8 +435,8 @@ public abstract class Critter {
 	}
 	
 	public static void displayWorld() {
-		String[][] output = new String[Params.world_height+2][Params.world_width+2]; 
-		// Draw Grid
+		/* CLI FORMAT 
+		String[][] output = new String[Params.world_height+2][Params.world_width+2]; // Draw Grid
 		for (int i = 0; i < Params.world_height+2; i +=1 ) {
 			for (int j = 0; j < Params.world_width+2; j +=1 ) {
 				if (i == 0 || i == Params.world_height+1) {
@@ -465,6 +465,8 @@ public abstract class Critter {
 				System.out.print(output[i][j]);
 			}
 			System.out.print("\n");
-		}
+		}*/
+		// GUI FORMAT
+		
 	}
 }
