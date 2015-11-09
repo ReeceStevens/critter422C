@@ -20,6 +20,7 @@ public class Main extends Application {
 	private boolean first_click = true;
 
 	public static GridPane map = new GridPane();
+	public static Stage controlStage;
 	
 	public void displayWorld(Stage critterStage, Stage controlStage) {
 		critterStage.setTitle("Critter World");
@@ -31,6 +32,47 @@ public class Main extends Application {
 		Scene scene = new Scene(crit_grid, 500, 500);
 		critterStage.setScene(scene);
 		critterStage.show();
+
+		// Controller
+		
+		controlStage.setTitle("Controller");
+		GridPane control_grid = new GridPane();
+		control_grid.setAlignment(Pos.CENTER);
+		control_grid.setHgap(10);
+		control_grid.setVgap(10);
+		grid.setPadding(new Insets(25,25,25,25));
+		int row = 0;
+
+		// Add Field for Critter type.
+		Label critName = new Label("Critter Name (e.g. Craig):");
+		control_grid.add(critName, 0, row);
+		TextField critNameField = new TextField();
+		control_grid.add(critNameField, 1, row);
+
+		// Add Field for Number of Steps
+		Label step = new Label("No of steps");
+		row += 1;
+		control_grid.add(step, 0, row);
+		TextField stepNumberField = new TextField();
+		control_grid.add(stepNumberField, 1, row);
+	
+		// Add Field for Critter stats
+		Label stats = new Label("Display stats for:");
+		row += 1;
+		control_grid.add(stats, 0, row);
+		TextField statsField = new TextField();
+		control_grid.add(statsField, 1, row);
+		
+		//Make button
+		Button makeBtn = new Button("Make critters");
+		HBox hbMakeBtn = new HBox(10);
+		hbMakeBtn.setAlignment(Pos.TOP_RIGHT);
+		row += 1;
+		control_grid.add(hbMakeBtn, 1, row);
+
+		Scene scene1 = new Scene(control_grid, 500, 500);
+		controlStage.setScene(scene1);
+		controlStage.show();	
 	}
 
 	@Override
@@ -38,7 +80,7 @@ public class Main extends Application {
 		try {
 			primaryStage.setTitle("Initialization Settings");
 			Stage critterStage = new Stage();
-			Stage controlStage = new Stage();
+			controlStage = new Stage();
 			
 			// Add a grid pane to lay out the buttons and text fields.
 			GridPane grid = new GridPane();
