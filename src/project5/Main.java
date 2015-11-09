@@ -21,7 +21,7 @@ public class Main extends Application {
 
 	public static GridPane map = new GridPane();
 	
-	public void displayWorld(Stage critterStage) {
+	public void displayWorld(Stage critterStage, Stage controlStage) {
 		critterStage.setTitle("Critter World");
 		GridPane crit_grid = new GridPane();
 		crit_grid.setAlignment(Pos.CENTER);
@@ -38,7 +38,7 @@ public class Main extends Application {
 		try {
 			primaryStage.setTitle("Initialization Settings");
 			Stage critterStage = new Stage();
-
+			Stage controlStage = new Stage();
 			
 			// Add a grid pane to lay out the buttons and text fields.
 			GridPane grid = new GridPane();
@@ -123,7 +123,7 @@ public class Main extends Application {
 					}
 					//actionTarget.setFill(Color.FIREBRICK);
 					//actionTarget.setText("TODO: message to display how many Critters added etc.");	
-					displayWorld(critterStage);
+					displayWorld(critterStage, controlStage);
 				}			
 			});
 			
