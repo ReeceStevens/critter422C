@@ -450,7 +450,16 @@ public abstract class Critter {
 			population.remove(a);
 		}
 	}
-	
+
+	private static void drawCritters() {
+		GraphicsContext gc = Main.crit_canvas.getGraphicsContext2D();
+		// Clear old critters
+		gc.clearRect(0,0,Main.crit_canvas.getWidth(), Main.crit_canvas.getHeight());
+		for (Critter a : population) {
+			// Draw each critter
+		}
+	}
+
 	public static void displayWorld() {
 		/* CLI FORMAT 
 		String[][] output = new String[Params.world_height+2][Params.world_width+2]; // Draw Grid
@@ -484,18 +493,17 @@ public abstract class Critter {
 			System.out.print("\n");
 		}*/
 		// GUI FORMAT
-		//Main.displayWorld(Main.critterStage, Main.controlStage);	
+		
 		// World Canvas
 		Main.critterStage.setTitle("Critter World");
-		Canvas crit_canvas = new Canvas(500,500);
-		GraphicsContext gc = crit_canvas.getGraphicsContext2D();
+		GraphicsContext gc = Main.crit_canvas.getGraphicsContext2D();
+		drawCritters();
 		Group root = new Group();
-		root.getChildren().add(crit_canvas);
+		root.getChildren().add(Main.crit_canvas);
 		Main.critterStage.setScene(new Scene(root));
 		Main.critterStage.show();
 
 		// Controller
-		
 		Main.controlStage.setTitle("Controller");
 		GridPane control_grid = new GridPane();
 		control_grid.setAlignment(Pos.CENTER);
