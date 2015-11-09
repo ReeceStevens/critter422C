@@ -14,6 +14,23 @@ package project5;
 
 import java.lang.reflect.Constructor;
 import java.util.List;
+import javafx.scene.Group;
+import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
+import javafx.geometry.Insets;
+import javafx.geometry.Pos;
+import javafx.scene.Scene;
+import javafx.scene.control.Button;
+import javafx.scene.control.Label;
+import javafx.scene.control.TextField;
+import javafx.scene.layout.GridPane;
+import javafx.scene.layout.HBox;
+import javafx.scene.paint.Color;
+import javafx.scene.text.Text;
+import javafx.scene.canvas.Canvas;
+import javafx.scene.canvas.GraphicsContext;
+import javafx.stage.Stage;
+
 
 /* see the PDF for descriptions of the methods and fields in this class
  * you may add fields, methods or inner classes to Critter ONLY if you make your additions private
@@ -467,7 +484,56 @@ public abstract class Critter {
 			System.out.print("\n");
 		}*/
 		// GUI FORMAT
-		Main.displayWorld(Main.critterStage, Main.controlStage);	
+		//Main.displayWorld(Main.critterStage, Main.controlStage);	
+		// World Canvas
+		Main.critterStage.setTitle("Critter World");
+		Canvas crit_canvas = new Canvas(500,500);
+		GraphicsContext gc = crit_canvas.getGraphicsContext2D();
+		Group root = new Group();
+		root.getChildren().add(crit_canvas);
+		Main.critterStage.setScene(new Scene(root));
+		Main.critterStage.show();
+
+		// Controller
+		
+		Main.controlStage.setTitle("Controller");
+		GridPane control_grid = new GridPane();
+		control_grid.setAlignment(Pos.CENTER);
+		control_grid.setHgap(10);
+		control_grid.setVgap(10);
+		control_grid.setPadding(new Insets(25,25,25,25));
+		int row = 0;
+
+		// Add Field for Critter type.
+		Label critName = new Label("Critter Name (e.g. Craig):");
+		control_grid.add(critName, 0, row);
+		TextField critNameField = new TextField();
+		control_grid.add(critNameField, 1, row);
+
+		// Add Field for Number of Steps
+		Label step = new Label("No of steps");
+		row += 1;
+		control_grid.add(step, 0, row);
+		TextField stepNumberField = new TextField();
+		control_grid.add(stepNumberField, 1, row);
+	
+		// Add Field for Critter stats
+		Label stats = new Label("Display stats for:");
+		row += 1;
+		control_grid.add(stats, 0, row);
+		TextField statsField = new TextField();
+		control_grid.add(statsField, 1, row);
+		
+		//Make button
+		Button makeBtn = new Button("Make critters");
+		HBox hbMakeBtn = new HBox(10);
+		hbMakeBtn.setAlignment(Pos.TOP_RIGHT);
+		row += 1;
+		control_grid.add(hbMakeBtn, 1, row);
+
+		Scene scene1 = new Scene(control_grid, 500, 500);
+		Main.controlStage.setScene(scene1);
+		Main.controlStage.show();	
 		
 	}
 }

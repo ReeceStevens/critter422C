@@ -25,7 +25,8 @@ public class Main extends Application {
 	public static Stage critterStage;
 	
 	public static void displayWorld(Stage critterStage, Stage controlStage) {
-		// World Canvas
+		/*		
+			// World Canvas
 		critterStage.setTitle("Critter World");
 		Canvas crit_canvas = new Canvas(500,500);
 		GraphicsContext gc = crit_canvas.getGraphicsContext2D();
@@ -75,6 +76,7 @@ public class Main extends Application {
 		Scene scene1 = new Scene(control_grid, 500, 500);
 		controlStage.setScene(scene1);
 		controlStage.show();	
+		*/
 	}
 
 	private static void drawCritters(GraphicsContext gc) {
@@ -171,7 +173,7 @@ public class Main extends Application {
 					}
 					//actionTarget.setFill(Color.FIREBRICK);
 					//actionTarget.setText("TODO: message to display how many Critters added etc.");	
-					displayWorld(critterStage, controlStage);
+					Critter.displayWorld();	
 				}			
 			});
 			
