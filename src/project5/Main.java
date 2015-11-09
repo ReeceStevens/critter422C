@@ -19,7 +19,6 @@ import javafx.scene.canvas.GraphicsContext;
 import javafx.stage.Stage;
 
 public class Main extends Application {
-	private boolean first_click = true;
 
 	public static GridPane map = new GridPane();
 	public static Stage critterStage;
@@ -31,9 +30,6 @@ public class Main extends Application {
 		drawCritters(gc);
 		Group root = new Group();
 		root.getChildren().add(crit_canvas);
-		
-		//Scene scene = new Scene(crit_grid, 500, 500);
-		
 		critterStage.setScene(new Scene(root));
 		critterStage.show();
 	}

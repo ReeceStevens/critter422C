@@ -467,6 +467,7 @@ public abstract class Critter {
 			System.out.print("\n");
 		}*/
 		// GUI FORMAT
+		displayWorld(Main.critterStage, Main.controlStage);	
 		
 	}
 }
