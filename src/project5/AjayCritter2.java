@@ -87,7 +87,7 @@ public class AjayCritter2 extends Critter {
 	}
 	
 
-	public static void runStats(java.util.List<Critter> ajaycritters2) {
+	public static String runStats(java.util.List<Critter> ajaycritters2) {
 		int total_walks = 0;
 		int total_runs = 0;
 		int max_age = 0;
@@ -99,10 +99,12 @@ public class AjayCritter2 extends Critter {
 				max_age = crit.age;
 			}
 		}
-		System.out.println("Total number of AjayCritter2s: " + ajaycritters2.size());
-		System.out.println("Total number of walks: " + total_walks);
-		System.out.println("Total number of runs: " + total_runs);
-		System.out.println("The oldest critter is " + max_age + " years old.");
+		String output = "";
+		output += "Total number of AjayCritter2s: " + ajaycritters2.size();
+		output += "Total number of walks: " + total_walks;
+		output += "Total number of runs: " + total_runs;
+		output += "The oldest critter is " + max_age + " years old.";
+		return output;
 	}
 }
 

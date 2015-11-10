@@ -26,7 +26,8 @@ public class Algae extends TestCritter {
 		setEnergy(getEnergy() + Params.photosynthesis_energy_amount);
 	}
 
-	public static void runStats(java.util.List<Critter> algaes) {
-		Critter.runStats(algaes);
+	public static String runStats(java.util.List<Critter> algaes) {
+		String output = Critter.runStats(algaes);
+		return output;
 	}
 }

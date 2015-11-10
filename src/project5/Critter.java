@@ -310,8 +310,8 @@ public abstract class Critter {
 		return result;
 	}
 	
-	public static void runStats(List<Critter> critters) {
-		System.out.print("" + critters.size() + " critters as follows -- ");
+	public static String runStats(List<Critter> critters) {
+		String output = "" + critters.size() + " critters as follows -- ";
 		java.util.Map<String, Integer> critter_count = new java.util.HashMap<String, Integer>();
 		for (Critter crit : critters) {
 			String crit_string = crit.toString();
@@ -324,10 +324,11 @@ public abstract class Critter {
 		}
 		String prefix = "";
 		for (String s : critter_count.keySet()) {
-			System.out.print(prefix + s + ":" + critter_count.get(s));
+			output += prefix + s + ":" + critter_count.get(s);
 			prefix = ", ";
 		}
-		System.out.println();		
+		output += "\n";
+		return output;
 	}
 	
 	/* the TestCritter class allows some critters to "cheat". If you want to 
@@ -480,47 +481,6 @@ public abstract class Critter {
 		}
 	}
 
-	private static void drawShape(GraphicsContext gc, CritterShape shape, int row, int column, int critter_size) {
-		switch(shape) {
-			case SQUARE:
-
-			case CIRCLE:
-			case TRIANGLE:
-			case DIAMOND:
-			case STAR:
-		}		
-	}
-
-	private static void drawCritters() {
-		
-
-		/*for (int i = 0; i < Params.world_width; i += 1) {
-			for (int j = 0; j < Params.world_height; j += 1) {
-				Main.crit_pane.add(new Canvas(),i,j);
-			}
-		}*/	
-
-		// Clear old critters
-		/*
-		GraphicsContext gc = Main.crit_canvas.getGraphicsContext2D();
-		gc.clearRect(0,0,Main.crit_canvas.getWidth(), Main.crit_canvas.getHeight());
-		// Determine the width of a critter box based on the current window size
-		// and the minimum side length
-		int critter_size;
-		int width = (int) Main.crit_canvas.getWidth();
-		int height = (int) Main.crit_canvas.getHeight();
-		int grid_width = width / Params.world_width;
-		int grid_height = height / Params.world_height;
-		if (grid_width < grid_height) {
-			critter_size = grid_width;	
-		} else { critter_size = grid_height; }
-		for (Critter a : population) {
-			CritterShape shape = a.viewShape();	
-			drawShape(gc, shape, a.x_coord, a.y_coord, critter_size);
-			// Draw each critter
-		}*/
-	}
-
 	public static void displayWorld() {
 		/* CLI FORMAT 
 		String[][] output = new String[Params.world_height+2][Params.world_width+2]; // Draw Grid
@@ -603,7 +563,6 @@ public abstract class Critter {
 
 		// World Canvas
 		Main.critterStage.setTitle("Critter World");
-		drawCritters();
 		//Group root = new Group();
 		//root.getChildren().add(grid);
 		//grid.setGridLinesVisible(true);
@@ -663,7 +622,7 @@ public abstract class Critter {
 		control_grid.add(hbStepBtn, 3, 2);
 
 		//Stats button
-		Button statsBtn = new Button("Make critters");
+		Button statsBtn = new Button("Display Stats");
 		HBox hbStatsBtn = new HBox(10);
 		hbStatsBtn.setAlignment(Pos.TOP_RIGHT);
 		row += 1;
@@ -759,33 +718,41 @@ public abstract class Critter {
 					return;
 				}
 				else {
+					name = "project5."+name;
 					try{
 						instances = Critter.getInstances(name);	
 					} catch (InvalidCritterException e) {
 						actionTarget.setFill(Color.FIREBRICK);
 						actionTarget.setText("Please enter a valid critter class.");	
+					} catch (NullPointerException e) {
+						actionTarget.setFill(Color.FIREBRICK);
+						actionTarget.setText("Problem is here..");	
 					}
 
 					// No instances of the class are alive.
 					if (instances.size() <= 0) {
 						actionTarget.setFill(Color.FIREBRICK);
-						actionTarget.setText("Please enter a valid critter class.");		
+						actionTarget.setText("None of these critters are left.");		
 					}
 
 					Class<?> critter_class = null;
 					Class [] paramList = new Class[1];
 					paramList[0] = java.util.List.class;
-
+					String output = "";
 					try{
 						critter_class = Class.forName(name);
 						java.lang.reflect.Method runStats = critter_class.getMethod("runStats", paramList);
-						runStats.invoke(critter_class, instances);
+						Object retval = runStats.invoke(critter_class, instances);
+						output = (String) retval;
+						actionTarget.setFill(Color.GREEN);
+						actionTarget.setText(output);
 					} catch (Exception e) {
 						actionTarget.setFill(Color.FIREBRICK);
 						actionTarget.setText("Please try again.");	
+						e.printStackTrace();
+						return;
 					}
 				}
-				//actionTarget.setFill(Color.FIREBRICK);
 				//actionTarget.setText("TODO: message to display how many Critters added etc.");	
 				//Critter.displayWorld();	
 			}			

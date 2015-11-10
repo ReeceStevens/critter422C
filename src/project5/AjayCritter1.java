@@ -70,14 +70,16 @@ public class AjayCritter1 extends Critter {
 	}
 	
 
-	public static void runStats(java.util.List<Critter> ajaycritters1) {
+	public static String runStats(java.util.List<Critter> ajaycritters1) {
 		int total_fights = 0 ;
 		for(Object obj : ajaycritters1) {
 			AjayCritter1 crit = (AjayCritter1) obj;
 			total_fights += crit.numFights;
 		}
-		System.out.println("Total number of AjayCritter1s: " + ajaycritters1.size());
-		System.out.println("Total number of fights: " + total_fights);
+		String output = "";
+		output += "Total number of AjayCritter1s: " + ajaycritters1.size();
+		output += "Total number of fights: " + total_fights;
+		return output;
 	}
 }
 

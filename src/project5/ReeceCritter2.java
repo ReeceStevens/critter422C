@@ -77,7 +77,7 @@ public class ReeceCritter2 extends Critter {
 			
 	}
 
-	public static void runStats(java.util.List<Critter> reece2) {
+	public static String runStats(java.util.List<Critter> reece2) {
 		int avg_age = 0;
 		int num_crits = 0;
 		int avg_energy = 0;
@@ -89,9 +89,11 @@ public class ReeceCritter2 extends Critter {
 		}
 		avg_age /= num_crits;
 		avg_energy /= num_crits;
-		System.out.print("" + num_crits + " total ReeceCritter2       ");
-		System.out.print("Average age: " + avg_age + "       ");
-		System.out.print("Average energy: " + avg_energy + "\n");
+		String output = "";
+		output += "" + num_crits + " total ReeceCritter2       ";
+		output += "Average age: " + avg_age + "       ";
+		output += "Average energy: " + avg_energy + "\n";
+		return output;
 	}
 
 
