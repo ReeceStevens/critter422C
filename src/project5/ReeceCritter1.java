@@ -1,5 +1,7 @@
 package project5;
 
+import javafx.scene.paint.Color;
+
 /*
  * Critter Description: ReeceCritter1 (Bishop)
  *
@@ -25,6 +27,20 @@ public class ReeceCritter1 extends Critter {
 	public String toString() { return "B"; }
 
 	public String stringRepresentation() { return "project5.ReeceCritter1";}
+
+	public CritterShape viewShape() {
+		return Critter.CritterShape.SQUARE;
+	}
+
+	@Override
+	public javafx.scene.paint.Color viewOutlineColor() {
+		return Color.STEELBLUE;
+	}	
+
+	@Override
+	public javafx.scene.paint.Color viewFillColor() {
+		return Color.LIGHTBLUE;
+	}
 
 	public ReeceCritter1() {
 		dir = Critter.getRandomInt(8);

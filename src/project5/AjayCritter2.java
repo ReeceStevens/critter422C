@@ -15,6 +15,9 @@ public class AjayCritter2 extends Critter {
 	private int num_runs;
 	private boolean hasMoved;
 
+	public CritterShape viewShape() {
+		return Critter.CritterShape.TRIANGLE;
+	}
 
 	public AjayCritter2() {
 		age = 0;

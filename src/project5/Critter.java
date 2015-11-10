@@ -14,6 +14,7 @@ package project5;
 
 import java.lang.reflect.Constructor;
 import java.util.List;
+import javafx.scene.shape.*;
 import javafx.scene.Group;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
@@ -479,13 +480,45 @@ public abstract class Critter {
 		}
 	}
 
+	private static void drawShape(GraphicsContext gc, CritterShape shape, int row, int column, int critter_size) {
+		switch(shape) {
+			case SQUARE:
+
+			case CIRCLE:
+			case TRIANGLE:
+			case DIAMOND:
+			case STAR:
+		}		
+	}
+
 	private static void drawCritters() {
-		GraphicsContext gc = Main.crit_canvas.getGraphicsContext2D();
+		
+
+		/*for (int i = 0; i < Params.world_width; i += 1) {
+			for (int j = 0; j < Params.world_height; j += 1) {
+				Main.crit_pane.add(new Canvas(),i,j);
+			}
+		}*/	
+
 		// Clear old critters
+		/*
+		GraphicsContext gc = Main.crit_canvas.getGraphicsContext2D();
 		gc.clearRect(0,0,Main.crit_canvas.getWidth(), Main.crit_canvas.getHeight());
+		// Determine the width of a critter box based on the current window size
+		// and the minimum side length
+		int critter_size;
+		int width = (int) Main.crit_canvas.getWidth();
+		int height = (int) Main.crit_canvas.getHeight();
+		int grid_width = width / Params.world_width;
+		int grid_height = height / Params.world_height;
+		if (grid_width < grid_height) {
+			critter_size = grid_width;	
+		} else { critter_size = grid_height; }
 		for (Critter a : population) {
+			CritterShape shape = a.viewShape();	
+			drawShape(gc, shape, a.x_coord, a.y_coord, critter_size);
 			// Draw each critter
-		}
+		}*/
 	}
 
 	public static void displayWorld() {
@@ -521,14 +554,100 @@ public abstract class Critter {
 			System.out.print("\n");
 		}*/
 		// GUI FORMAT
-		
+		// TODO: work in progress, correctly draw the shapes.
+		double width, height;
+		if (Double.isNaN(Main.critterStage.getWidth())) {
+			width = 500.0 - 50.0;
+			height = 500.0 - 50.0;
+		} else {
+			width =  Main.critterStage.getWidth() - 50.0;
+			height =  Main.critterStage.getHeight() - 50.0;
+		}
+		GridPane master_grid = new GridPane();
+		System.out.printf("Width %f height %f\n",width, height);
+		double min = 0.0; 
+		if (width < height) { min = width/Params.world_width; }
+		else {min = height/Params.world_height; }
+		GridPane grid = new GridPane();
+		System.out.printf("minimum size: %f", min);
+		for (int i = 0; i < Params.world_width; i += 1) {
+			for (int j = 0; j < Params.world_height; j += 1) {
+				javafx.scene.shape.Rectangle clear_rect = new javafx.scene.shape.Rectangle(0,0,min-1,min-1);
+				clear_rect.setFill(Color.WHITE);
+				clear_rect.setStroke(Color.WHITE);
+				grid.add(clear_rect,j,i);
+			}
+		}	
+		for (Critter a : population) {
+			CritterShape shape = a.viewShape();
+			switch(shape){
+				case SQUARE:
+					javafx.scene.shape.Rectangle square = new javafx.scene.shape.Rectangle(0,0,min-1,min-1);
+					square.setStroke(a.viewOutlineColor());
+					square.setFill(a.viewFillColor());
+					grid.add(square, a.x_coord, a.y_coord);
+				case CIRCLE:
+					javafx.scene.shape.Circle circle = new javafx.scene.shape.Circle(min/2, min/2, min/2);
+					circle.setStroke(a.viewOutlineColor());
+					circle.setFill(a.viewFillColor());
+					grid.add(circle, a.x_coord, a.y_coord);
+				case TRIANGLE: 
+					grid.add(new javafx.scene.shape.Polygon(), a.x_coord, a.y_coord);
+				case DIAMOND:
+					grid.add(new javafx.scene.shape.Rectangle(), a.x_coord, a.y_coord);
+				case STAR:
+					grid.add(new javafx.scene.shape.Rectangle(), a.x_coord, a.y_coord);
+			}
+						
+		}	
+
+
 		// World Canvas
 		Main.critterStage.setTitle("Critter World");
-		GraphicsContext gc = Main.crit_canvas.getGraphicsContext2D();
 		drawCritters();
-		Group root = new Group();
-		root.getChildren().add(Main.crit_canvas);
-		Main.critterStage.setScene(new Scene(root));
+		//Group root = new Group();
+		//root.getChildren().add(grid);
+		//grid.setGridLinesVisible(true);
+		//Main.critterStage.setScene(new Scene(grid,Math.ceil(width+ 50.0),Math.ceil(height + 50.0)));
+		grid.setPadding(new Insets(25,25,25,25));
+		master_grid.add(grid,0,0);
+		Button bstep = new Button("Time Step");
+		HBox box_step_button = new HBox(10);
+		box_step_button.setAlignment(Pos.BOTTOM_CENTER);
+		box_step_button.getChildren().add(bstep);
+		Label stepPrompt = new Label("Number of time steps: ");
+		master_grid.add(stepPrompt, 0, 1);
+		TextField stepField = new TextField();
+		master_grid.add(stepPrompt,1,1);
+		master_grid.add(box_step_button,2,1);
+		bstep.setOnAction(new EventHandler<ActionEvent>() {
+			@Override
+			public void handle(ActionEvent event) {
+				String num_steps = stepField.getText();
+				if (num_steps == null) { 
+					// Only step once if no number specified
+					Critter.worldTimeStep();
+					Critter.displayWorld();
+					return;
+				}
+				else {
+					Integer int_steps;
+					try {
+						int_steps = Integer.parseInt(num_steps);
+						for (int i = 0; i < int_steps; i += 1) {
+							Critter.worldTimeStep();
+						}
+						return;
+					} catch (NumberFormatException e) {
+						//TODO: make better error message
+						e.printStackTrace();
+					}
+			}
+		};
+		});
+
+		Main.critterStage.setScene(new Scene(master_grid,Main.critterStage.getWidth(), Main.critterStage.getHeight()));
+		//Main.critterStage.setScene(new Scene(master_grid, 500,500));
 		Main.critterStage.show();
 
 		// Controller
@@ -567,9 +686,9 @@ public abstract class Critter {
 		row += 1;
 		control_grid.add(hbMakeBtn, 1, row);
 
-		Scene scene1 = new Scene(control_grid, 500, 500);
-		Main.controlStage.setScene(scene1);
-		Main.controlStage.show();	
+		//Scene scene1 = new Scene(control_grid, 500, 500);
+		//Main.controlStage.setScene(scene1);
+		//Main.controlStage.show();	
 		
 	}
 }

@@ -11,6 +11,9 @@ public class AjayCritter1 extends Critter {
 	private int numFights;
 	private boolean hasMoved;
 
+	public CritterShape viewShape() {
+		return Critter.CritterShape.CIRCLE;
+	}
 
 	public AjayCritter1() {
 		dir = Critter.getRandomInt(8);

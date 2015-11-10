@@ -9,6 +9,10 @@ public class Craig extends Critter {
 	private static final int GENE_TOTAL = 24;
 	private int[] genes = new int[8];
 	private int dir;
+
+	public CritterShape viewShape() {
+		return Critter.CritterShape.DIAMOND;
+	}
 	
 	public Craig() {
 		for (int k = 0; k < 8; k += 1) {

@@ -33,6 +33,10 @@ public class ReeceCritter2 extends Critter {
 		age = 0;
 	}
 
+	public CritterShape viewShape() {
+		return Critter.CritterShape.STAR;
+	}
+
 	public boolean fight(String enemy) {
 		// If it can afford it, it won't fight its own species.
 		if (!hasMoved) {
