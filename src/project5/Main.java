@@ -23,7 +23,7 @@ public class Main extends Application {
 	public static GridPane map = new GridPane();
 	public static Stage controlStage;
 	public static Stage critterStage;
-	public static GridPane crit_pane;
+	public static GridPane crit_grid;
 	public static Canvas crit_canvas;
 	
 	@Override
@@ -32,6 +32,7 @@ public class Main extends Application {
 			primaryStage.setTitle("Initialization Settings");
 			controlStage = new Stage();
 			critterStage = new Stage();
+			crit_grid = new GridPane();
 			//crit_canvas = new Canvas(500,500);
 
 			//crit_pane = new GridPane();

@@ -560,42 +560,44 @@ public abstract class Critter {
 			width = 500.0 - 50.0;
 			height = 500.0 - 50.0;
 		} else {
-			width =  Main.critterStage.getWidth() - 50.0;
-			height =  Main.critterStage.getHeight() - 50.0;
+			width =  Main.crit_grid.getWidth() - 50 ;
+			height =  Main.crit_grid.getHeight() - 50;
 		}
 		GridPane master_grid = new GridPane();
+		Main.crit_grid.getChildren().clear();
 		System.out.printf("Width %f height %f\n",width, height);
 		double min = 0.0; 
 		if (width < height) { min = width/Params.world_width; }
 		else {min = height/Params.world_height; }
-		GridPane grid = new GridPane();
 		System.out.printf("minimum size: %f", min);
+		min = Math.floor(min);
 		for (int i = 0; i < Params.world_width; i += 1) {
 			for (int j = 0; j < Params.world_height; j += 1) {
-				javafx.scene.shape.Rectangle clear_rect = new javafx.scene.shape.Rectangle(0,0,min-1,min-1);
+				javafx.scene.shape.Rectangle clear_rect = new javafx.scene.shape.Rectangle(0,0,min,min);
 				clear_rect.setFill(Color.WHITE);
 				clear_rect.setStroke(Color.WHITE);
-				grid.add(clear_rect,j,i);
+				Main.crit_grid.add(clear_rect,j,i);
 			}
 		}	
 		for (Critter a : population) {
 			CritterShape shape = a.viewShape();
 			javafx.scene.shape.Shape crit_shape = null;
 			switch(shape){
-				case SQUARE:
-					crit_shape = new javafx.scene.shape.Rectangle(0,0,min-1,min-1);
 				case CIRCLE:
-					crit_shape = new javafx.scene.shape.Circle(min/2, min/2, min/2);
+					double mid = Math.floor(min/2);
+					crit_shape = new javafx.scene.shape.Circle(mid, mid,mid);
+				case SQUARE:
+					crit_shape = new javafx.scene.shape.Rectangle(0,0,min,min);
 				case TRIANGLE: 
-					grid.add(new javafx.scene.shape.Polygon(), a.x_coord, a.y_coord);
+					//grid.add(new javafx.scene.shape.Polygon(), a.x_coord, a.y_coord);
 				case DIAMOND:
-					grid.add(new javafx.scene.shape.Rectangle(), a.x_coord, a.y_coord);
+					//grid.add(new javafx.scene.shape.Rectangle(), a.x_coord, a.y_coord);
 				case STAR:
-					grid.add(new javafx.scene.shape.Rectangle(), a.x_coord, a.y_coord);
+					//grid.add(new javafx.scene.shape.Rectangle(), a.x_coord, a.y_coord);
 			}
 			crit_shape.setStroke(a.viewOutlineColor());
 			crit_shape.setFill(a.viewFillColor());
-			grid.add(crit_shape, a.x_coord, a.y_coord);
+			Main.crit_grid.add(crit_shape, a.x_coord, a.y_coord);
 		}	
 
 
@@ -606,8 +608,7 @@ public abstract class Critter {
 		//root.getChildren().add(grid);
 		//grid.setGridLinesVisible(true);
 		//Main.critterStage.setScene(new Scene(grid,Math.ceil(width+ 50.0),Math.ceil(height + 50.0)));
-		grid.setPadding(new Insets(25,25,25,25));
-		master_grid.add(grid,0,0);
+		master_grid.add(Main.crit_grid,0,0);
 
 		// Controller
 		Main.controlStage.setTitle("Controller");
@@ -673,13 +674,9 @@ public abstract class Critter {
 		row += 2;
 		control_grid.add(actionTarget, 0, row);
 
-		//Scene scene1 = new Scene(control_grid, 1000, 1000);
 		master_grid.add(control_grid,1,0);
 		Main.critterStage.setScene(new Scene(master_grid,Main.critterStage.getWidth(), Main.critterStage.getHeight()));
-		//Main.critterStage.setScene(new Scene(master_grid, 500,500));
 		Main.critterStage.show();
-		//Main.controlStage.setScene(scene1);
-		//Main.controlStage.show();	
 		makeBtn.setOnAction(new EventHandler<ActionEvent>() {
 			@Override
 			public void handle(ActionEvent event) {
