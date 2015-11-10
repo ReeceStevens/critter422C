@@ -38,6 +38,34 @@ import javafx.stage.Stage;
  */
 public abstract class Critter {
 
+	public enum CritterShape {
+		CIRCLE,
+		SQUARE,
+		TRIANGLE,
+		DIAMOND,
+		STAR
+	}
+	
+	/* the default color is white, which I hope makes critters invisible by default
+	 * If you change the background color of your View component, then update the default
+	 * color to be the same as you background 
+	 * 
+	 * critters must override at least one of the following three methods, it is not 
+	 * proper for critters to remain invisible in the view
+	 * 
+	 * If a critter only overrides the outline color, then it will look like a non-filled 
+	 * shape, at least, that's the intent. You can edit these default methods however you 
+	 * need to, but please preserve that intent as you implement them. 
+	 */
+	public javafx.scene.paint.Color viewColor() { 
+		return javafx.scene.paint.Color.WHITE; 
+	}
+	
+	public javafx.scene.paint.Color viewOutlineColor() { return viewColor(); }
+	public javafx.scene.paint.Color viewFillColor() { return viewColor(); }
+	
+	public abstract CritterShape viewShape(); 
+
 	private static String [] validCritters = { "project5.Algae", "project5.Craig", "project5.ReeceCritter1", "project5.ReeceCritter2", "project5.AjayCritter1", "project5.AjayCritter2", "project5.Craig2" };
 
 	private static java.util.Random rand = new java.util.Random();
@@ -450,7 +478,16 @@ public abstract class Critter {
 			population.remove(a);
 		}
 	}
-	
+
+	private static void drawCritters() {
+		GraphicsContext gc = Main.crit_canvas.getGraphicsContext2D();
+		// Clear old critters
+		gc.clearRect(0,0,Main.crit_canvas.getWidth(), Main.crit_canvas.getHeight());
+		for (Critter a : population) {
+			// Draw each critter
+		}
+	}
+
 	public static void displayWorld() {
 		/* CLI FORMAT 
 		String[][] output = new String[Params.world_height+2][Params.world_width+2]; // Draw Grid
@@ -484,18 +521,17 @@ public abstract class Critter {
 			System.out.print("\n");
 		}*/
 		// GUI FORMAT
-		//Main.displayWorld(Main.critterStage, Main.controlStage);	
+		
 		// World Canvas
 		Main.critterStage.setTitle("Critter World");
-		Canvas crit_canvas = new Canvas(500,500);
-		GraphicsContext gc = crit_canvas.getGraphicsContext2D();
+		GraphicsContext gc = Main.crit_canvas.getGraphicsContext2D();
+		drawCritters();
 		Group root = new Group();
-		root.getChildren().add(crit_canvas);
+		root.getChildren().add(Main.crit_canvas);
 		Main.critterStage.setScene(new Scene(root));
 		Main.critterStage.show();
 
 		// Controller
-		
 		Main.controlStage.setTitle("Controller");
 		GridPane control_grid = new GridPane();
 		control_grid.setAlignment(Pos.CENTER);
