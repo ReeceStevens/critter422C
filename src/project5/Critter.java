@@ -580,17 +580,12 @@ public abstract class Critter {
 		}	
 		for (Critter a : population) {
 			CritterShape shape = a.viewShape();
+			javafx.scene.shape.Shape crit_shape = null;
 			switch(shape){
 				case SQUARE:
-					javafx.scene.shape.Rectangle square = new javafx.scene.shape.Rectangle(0,0,min-1,min-1);
-					square.setStroke(a.viewOutlineColor());
-					square.setFill(a.viewFillColor());
-					grid.add(square, a.x_coord, a.y_coord);
+					crit_shape = new javafx.scene.shape.Rectangle(0,0,min-1,min-1);
 				case CIRCLE:
-					javafx.scene.shape.Circle circle = new javafx.scene.shape.Circle(min/2, min/2, min/2);
-					circle.setStroke(a.viewOutlineColor());
-					circle.setFill(a.viewFillColor());
-					grid.add(circle, a.x_coord, a.y_coord);
+					crit_shape = new javafx.scene.shape.Circle(min/2, min/2, min/2);
 				case TRIANGLE: 
 					grid.add(new javafx.scene.shape.Polygon(), a.x_coord, a.y_coord);
 				case DIAMOND:
@@ -598,7 +593,9 @@ public abstract class Critter {
 				case STAR:
 					grid.add(new javafx.scene.shape.Rectangle(), a.x_coord, a.y_coord);
 			}
-						
+			crit_shape.setStroke(a.viewOutlineColor());
+			crit_shape.setFill(a.viewFillColor());
+			grid.add(crit_shape, a.x_coord, a.y_coord);
 		}	
 
 
@@ -611,44 +608,6 @@ public abstract class Critter {
 		//Main.critterStage.setScene(new Scene(grid,Math.ceil(width+ 50.0),Math.ceil(height + 50.0)));
 		grid.setPadding(new Insets(25,25,25,25));
 		master_grid.add(grid,0,0);
-		Button bstep = new Button("Time Step");
-		HBox box_step_button = new HBox(10);
-		box_step_button.setAlignment(Pos.BOTTOM_CENTER);
-		box_step_button.getChildren().add(bstep);
-		Label stepPrompt = new Label("Number of time steps: ");
-		master_grid.add(stepPrompt, 0, 1);
-		TextField stepField = new TextField();
-		master_grid.add(stepPrompt,1,1);
-		master_grid.add(box_step_button,2,1);
-		bstep.setOnAction(new EventHandler<ActionEvent>() {
-			@Override
-			public void handle(ActionEvent event) {
-				String num_steps = stepField.getText();
-				if (num_steps == null) { 
-					// Only step once if no number specified
-					Critter.worldTimeStep();
-					Critter.displayWorld();
-					return;
-				}
-				else {
-					Integer int_steps;
-					try {
-						int_steps = Integer.parseInt(num_steps);
-						for (int i = 0; i < int_steps; i += 1) {
-							Critter.worldTimeStep();
-						}
-						return;
-					} catch (NumberFormatException e) {
-						//TODO: make better error message
-						e.printStackTrace();
-					}
-			}
-		};
-		});
-
-		Main.critterStage.setScene(new Scene(master_grid,Main.critterStage.getWidth(), Main.critterStage.getHeight()));
-		//Main.critterStage.setScene(new Scene(master_grid, 500,500));
-		Main.critterStage.show();
 
 		// Controller
 		Main.controlStage.setTitle("Controller");
@@ -714,9 +673,13 @@ public abstract class Critter {
 		row += 2;
 		control_grid.add(actionTarget, 0, row);
 
-		Scene scene1 = new Scene(control_grid, 1000, 1000);
-		Main.controlStage.setScene(scene1);
-		Main.controlStage.show();	
+		//Scene scene1 = new Scene(control_grid, 1000, 1000);
+		master_grid.add(control_grid,1,0);
+		Main.critterStage.setScene(new Scene(master_grid,Main.critterStage.getWidth(), Main.critterStage.getHeight()));
+		//Main.critterStage.setScene(new Scene(master_grid, 500,500));
+		Main.critterStage.show();
+		//Main.controlStage.setScene(scene1);
+		//Main.controlStage.show();	
 		makeBtn.setOnAction(new EventHandler<ActionEvent>() {
 			@Override
 			public void handle(ActionEvent event) {
