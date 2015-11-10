@@ -665,8 +665,15 @@ public abstract class Critter {
 		TextField critNameField = new TextField();
 		control_grid.add(critNameField, 1, row);
 
+		// Add Field for Number of Critters
+		Label numCrits = new Label("No of critters:");
+		row += 1;
+		control_grid.add(numCrits, 0, row);
+		TextField critNumField = new TextField();
+		control_grid.add(critNumField, 1, row);
+
 		// Add Field for Number of Steps
-		Label step = new Label("No of steps");
+		Label step = new Label("No of steps:");
 		row += 1;
 		control_grid.add(step, 0, row);
 		TextField stepNumberField = new TextField();
@@ -684,11 +691,144 @@ public abstract class Critter {
 		HBox hbMakeBtn = new HBox(10);
 		hbMakeBtn.setAlignment(Pos.TOP_RIGHT);
 		row += 1;
-		control_grid.add(hbMakeBtn, 1, row);
+		hbMakeBtn.getChildren().add(makeBtn);
+		control_grid.add(hbMakeBtn, 3, 1);
 
-		//Scene scene1 = new Scene(control_grid, 500, 500);
-		//Main.controlStage.setScene(scene1);
-		//Main.controlStage.show();	
+		//Step button
+		Button stepBtn = new Button("Execute steps");
+		HBox hbStepBtn = new HBox(10);
+		hbStepBtn.setAlignment(Pos.TOP_RIGHT);
+		row += 1;
+		hbStepBtn.getChildren().add(stepBtn);
+		control_grid.add(hbStepBtn, 3, 2);
+
+		//Stats button
+		Button statsBtn = new Button("Make critters");
+		HBox hbStatsBtn = new HBox(10);
+		hbStatsBtn.setAlignment(Pos.TOP_RIGHT);
+		row += 1;
+		hbStatsBtn.getChildren().add(statsBtn);
+		control_grid.add(hbStatsBtn, 3, 3);
+		// Action when Make Critters Button is pressed.
+		final Text actionTarget = new Text();
+		row += 2;
+		control_grid.add(actionTarget, 0, row);
+
+		Scene scene1 = new Scene(control_grid, 1000, 1000);
+		Main.controlStage.setScene(scene1);
+		Main.controlStage.show();	
+		makeBtn.setOnAction(new EventHandler<ActionEvent>() {
+			@Override
+			public void handle(ActionEvent event) {
+				String name = critNameField.getText();
+				String numString = critNumField.getText();
+				//TODO: make a more graceful error message if someone inputs an invalid critter type
+				if ((name == null)) {
+					actionTarget.setFill(Color.FIREBRICK);
+					actionTarget.setText("Please enter a critter class.");	
+					return;
+				}
+				if (numString == null) {
+					try {
+						Critter.makeCritter("project5.".concat(name));
+					} catch (InvalidCritterException e) {
+						actionTarget.setFill(Color.FIREBRICK);
+						actionTarget.setText("Please enter a valid critter class.");	
+					}
+				}
+				else {
+					try{ 
+						for (int i = 0; i < Integer.parseInt(numString); i += 1) {
+							try {
+								Critter.makeCritter("project5.".concat(name));
+							} catch (InvalidCritterException e) {
+								actionTarget.setFill(Color.FIREBRICK);
+								actionTarget.setText("Please enter a valid critter class.");	
+							}
+						}
+					} catch (NumberFormatException e) {
+						actionTarget.setFill(Color.FIREBRICK);
+						actionTarget.setText("Invalid number of critters. Please type an integer number of critters to add.");	
+						return;
+					}
+				}
+				//actionTarget.setFill(Color.FIREBRICK);
+				//actionTarget.setText("TODO: message to display how many Critters added etc.");	
+				Critter.displayWorld();	
+			}			
+		});
 		
+		stepBtn.setOnAction(new EventHandler<ActionEvent>() {
+			@Override
+			public void handle(ActionEvent event) {
+				String numSteps = stepNumberField.getText();
+				//TODO: make a more graceful error message if someone inputs an invalid critter type
+				if (numSteps == null) {
+					actionTarget.setFill(Color.FIREBRICK);
+					actionTarget.setText("Please enter a valid number of steps");
+				}
+				else {
+					try{ 
+					//	if (Integer.parseInt(numSteps) < 1) {
+					//		throw new IllegalArgumentException("Please enter a number larger than 1");
+					//	}
+						for (int i = 0; i < Integer.parseInt(numSteps); i += 1) {
+							Critter.worldTimeStep();
+						}
+					} catch (NumberFormatException e) {
+						actionTarget.setFill(Color.FIREBRICK);
+						actionTarget.setText("Invalid number of steps. Please type an integer number of steps to execute.");	
+						return;
+					}
+				}
+				//actionTarget.setFill(Color.FIREBRICK);
+				//actionTarget.setText("TODO: message to display how many Critters added etc.");	
+				Critter.displayWorld();	
+			}			
+		});
+
+		statsBtn.setOnAction(new EventHandler<ActionEvent>() {
+			@Override	
+			public void handle(ActionEvent event) {
+				String name = statsField.getText();
+				List<Critter> instances = null;  
+				//TODO: make a more graceful error message if someone inputs an invalid critter type
+				if ((name == null)) {
+					actionTarget.setFill(Color.FIREBRICK);
+					actionTarget.setText("Please enter a critter class.");	
+					return;
+				}
+				else {
+					try{
+						instances = Critter.getInstances(name);	
+					} catch (InvalidCritterException e) {
+						actionTarget.setFill(Color.FIREBRICK);
+						actionTarget.setText("Please enter a valid critter class.");	
+					}
+
+					// No instances of the class are alive.
+					if (instances.size() <= 0) {
+						actionTarget.setFill(Color.FIREBRICK);
+						actionTarget.setText("Please enter a valid critter class.");		
+					}
+
+					Class<?> critter_class = null;
+					Class [] paramList = new Class[1];
+					paramList[0] = java.util.List.class;
+
+					try{
+						critter_class = Class.forName(name);
+						java.lang.reflect.Method runStats = critter_class.getMethod("runStats", paramList);
+						runStats.invoke(critter_class, instances);
+					} catch (Exception e) {
+						actionTarget.setFill(Color.FIREBRICK);
+						actionTarget.setText("Please try again.");	
+					}
+				}
+				//actionTarget.setFill(Color.FIREBRICK);
+				//actionTarget.setText("TODO: message to display how many Critters added etc.");	
+				//Critter.displayWorld();	
+			}			
+		});
 	}
 }
