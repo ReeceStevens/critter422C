@@ -1,12 +1,12 @@
 /* CRITTERS Critter.java
- * EE422C Project 4 submission by
+ * EE422C Project 5 submission by
  * Replace <...> with your actual data.
  * Reece Stevens
  * rgs835
- * <Student1 5-digit Unique No.>
+ * 16340
  * Ajay Rastogi
  * asr2368
- * <Student2 5-digit Unique No.>
+ * 16345
  * Slip days used: 0
  * Fall 2015
  */
@@ -840,8 +840,8 @@ public abstract class Critter {
 		quitBtn.setOnAction(new EventHandler<ActionEvent>() {
 			@Override
 			public void handle(ActionEvent event) {
-				Main.critterStage.close();
-				Main.initStage.close();
+				Main.critterStage.close(); //quit the display pane
+				Main.initStage.close(); //quit the init pane
 			}			
 		});
 		srBtn.setOnAction(new EventHandler<ActionEvent>() {
@@ -850,7 +850,7 @@ public abstract class Critter {
 				population.clear();
 				babies.clear();
 				Critter.displayWorld();
-				Main.initStage.toFront();
+				Main.initStage.toFront(); //bring the initialization screen back to the front
 			}			
 		});
 
