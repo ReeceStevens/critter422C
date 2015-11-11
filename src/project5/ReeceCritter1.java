@@ -28,6 +28,7 @@ public class ReeceCritter1 extends Critter {
 
 	public String stringRepresentation() { return "project5.ReeceCritter1";}
 
+	@Override
 	public CritterShape viewShape() {
 		return Critter.CritterShape.SQUARE;
 	}

@@ -1,5 +1,6 @@
 package project5;
 
+import javafx.scene.paint.Color;
 public class AjayCritter1 extends Critter {
 
 	@Override
@@ -11,16 +12,25 @@ public class AjayCritter1 extends Critter {
 	private int numFights;
 	private boolean hasMoved;
 
-	public CritterShape viewShape() {
-		return Critter.CritterShape.CIRCLE;
-	}
-
 	public AjayCritter1() {
 		dir = Critter.getRandomInt(8);
 		hasMoved = false;
 		numFights = 0;
 	}
 	
+	public CritterShape viewShape() {
+		return Critter.CritterShape.CIRCLE;
+	}
+
+	@Override
+	public javafx.scene.paint.Color viewOutlineColor() {
+		return Color.DARKRED;
+	}	
+
+	@Override
+	public javafx.scene.paint.Color viewFillColor() {
+		return Color.DARKSEAGREEN;
+	}
 	public boolean fight(String opponent) {
 		if (opponent.equals("project4.Alage")) { //always fight (eat) algae
 			return true;
@@ -78,7 +88,7 @@ public class AjayCritter1 extends Critter {
 		}
 		String output = "";
 		output += "Total number of AjayCritter1s: " + ajaycritters1.size();
-		output += "Total number of fights: " + total_fights;
+		output += "\nTotal number of fights: " + total_fights;
 		return output;
 	}
 }
