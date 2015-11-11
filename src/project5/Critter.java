@@ -686,6 +686,15 @@ public abstract class Critter {
 		row += 1;
 		hbqStepBtn.getChildren().add(qstepBtn);
 		control_grid.add(hbqStepBtn, 3, 6);
+
+		//SoftReset button
+		Button srBtn = new Button("Reset");
+		HBox hbsrBtn = new HBox(10);
+		hbsrBtn.setAlignment(Pos.TOP_RIGHT);
+		row += 1;
+		hbsrBtn.getChildren().add(srBtn);
+		control_grid.add(srBtn, 3, 7);
+
 		//Stats button
 		Button statsBtn = new Button("Display stats");
 		HBox hbStatsBtn = new HBox(10);
@@ -833,6 +842,15 @@ public abstract class Critter {
 			public void handle(ActionEvent event) {
 				Main.critterStage.close();
 				Main.initStage.close();
+			}			
+		});
+		srBtn.setOnAction(new EventHandler<ActionEvent>() {
+			@Override
+			public void handle(ActionEvent event) {
+				population.clear();
+				babies.clear();
+				Critter.displayWorld();
+				Main.initStage.toFront();
 			}			
 		});
 
