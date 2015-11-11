@@ -30,6 +30,9 @@ import javafx.scene.paint.Color;
 import javafx.scene.text.Text;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
+import javafx.scene.control.RadioButton;
+import javafx.scene.control.ToggleGroup;
+import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
 
@@ -589,8 +592,30 @@ public abstract class Critter {
 		// Add Field for Critter type.
 		Label critName = new Label("Critter Name (e.g. Craig):");
 		control_grid.add(critName, 0, row);
-		TextField critNameField = new TextField();
-		control_grid.add(critNameField, 1, row);
+		//TextField critNameField = new TextField();
+		//control_grid.add(critNameField, 1, row);
+		row += 1;
+		// Add Radio Buttons for Critter Classes
+		RadioButton rdo_rc1 = new RadioButton("ReeceCritter1");
+		RadioButton rdo_rc2 = new RadioButton("ReeceCritter2");
+		RadioButton rdo_ac1 = new RadioButton("AjayCritter1");
+		RadioButton rdo_ac2 = new RadioButton("AjayCritter2");
+		RadioButton rdo_craig = new RadioButton("Craig");
+		RadioButton rdo_algae = new RadioButton("Algae");
+		ToggleGroup group = new ToggleGroup();
+		rdo_ac1.setToggleGroup(group);
+		rdo_ac2.setToggleGroup(group);
+		rdo_rc1.setToggleGroup(group);
+		rdo_rc2.setToggleGroup(group);
+		rdo_craig.setToggleGroup(group);
+		rdo_algae.setToggleGroup(group);
+		rdo_rc1.setSelected(true);
+		VBox vbox1 = new VBox(20,rdo_ac1,rdo_ac2,rdo_rc1);
+		vbox1.setPadding(new Insets(10));
+		VBox vbox2 = new VBox(20,rdo_rc2,rdo_craig,rdo_algae);
+		vbox2.setPadding(new Insets(10));
+		control_grid.add(vbox1,0,row);
+		control_grid.add(vbox2,1,row);
 
 		// Add Field for Number of Critters
 		Label numCrits = new Label("No of critters:");
@@ -619,7 +644,7 @@ public abstract class Critter {
 		hbMakeBtn.setAlignment(Pos.TOP_RIGHT);
 		row += 1;
 		hbMakeBtn.getChildren().add(makeBtn);
-		control_grid.add(hbMakeBtn, 3, 1);
+		control_grid.add(hbMakeBtn, 3, 2);
 
 		//Step button
 		Button stepBtn = new Button("Execute steps");
@@ -627,7 +652,7 @@ public abstract class Critter {
 		hbStepBtn.setAlignment(Pos.TOP_RIGHT);
 		row += 1;
 		hbStepBtn.getChildren().add(stepBtn);
-		control_grid.add(hbStepBtn, 3, 2);
+		control_grid.add(hbStepBtn, 3, 3);
 
 		//Stats button
 		Button statsBtn = new Button("Display Stats");
@@ -635,7 +660,7 @@ public abstract class Critter {
 		hbStatsBtn.setAlignment(Pos.TOP_RIGHT);
 		row += 1;
 		hbStatsBtn.getChildren().add(statsBtn);
-		control_grid.add(hbStatsBtn, 3, 3);
+		control_grid.add(hbStatsBtn, 3, 4);
 		// Action when Make Critters Button is pressed.
 		final Text actionTarget = new Text();
 		row += 2;
@@ -647,10 +672,11 @@ public abstract class Critter {
 		makeBtn.setOnAction(new EventHandler<ActionEvent>() {
 			@Override
 			public void handle(ActionEvent event) {
-				String name = critNameField.getText();
+				//String name = critNameField.getText();
+				String name = "";
 				String numString = critNumField.getText();
 				//TODO: make a more graceful error message if someone inputs an invalid critter type
-				if ((name == null)) {
+				/*if ((name == null)) {
 					actionTarget.setFill(Color.FIREBRICK);
 					actionTarget.setText("Please enter a critter class.");
 					return;	
@@ -663,7 +689,13 @@ public abstract class Critter {
 						actionTarget.setText("Please enter a valid number of critters.");
 						return;	
 					}
-				}
+				}*/
+				if (rdo_ac1.isSelected()) name = "AjayCritter1";
+				if (rdo_ac2.isSelected()) name = "AjayCritter2";
+				if (rdo_rc1.isSelected()) name = "ReeceCritter1";
+				if (rdo_rc2.isSelected()) name = "ReeceCritter2";
+				if (rdo_craig.isSelected()) name = "Craig";
+				if (rdo_algae.isSelected()) name = "Algae";
 				else {
 					try{ 
 						for (int i = 0; i < Integer.parseInt(numString); i += 1) {
