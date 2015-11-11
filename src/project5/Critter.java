@@ -9,6 +9,8 @@
  * 16345
  * Slip days used: 0
  * Fall 2015
+ * KNOWN ERRORS: PRINTING THE ERROR MESSAGES CAUSES A SHIFTING OF THE TEXTFIELDS BECAUSE OF AN EXPANSION OF THE GRID
+ *  SPACE AT WHICH THE ERROR MESSAGE IS PRINTED -- WE SHORTENED THE ERROR MESSAGES AS MUCH AS POSSIBLE TO COMPENSATE.
  */
 package project5;
 
@@ -743,7 +745,7 @@ public abstract class Critter {
 						}
 					} catch (NumberFormatException e) {
 						actionTarget.setFill(Color.FIREBRICK);
-						actionTarget.setText("Invalid number of critters. Please type an integer number of critters to add.");	
+						actionTarget.setText("Enter a valid number of critters.");	
 						return;
 					}
 				//actionTarget.setFill(Color.FIREBRICK);
