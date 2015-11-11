@@ -29,6 +29,7 @@ public class Main extends Application {
 	
 	@Override
 	public void start(Stage primaryStage) {
+		
 		try {
 			initStage = primaryStage;
 			primaryStage.setTitle("Initialization Settings");

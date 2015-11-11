@@ -12,6 +12,7 @@
  */
 package project5;
 
+import java.util.*;
 import java.lang.reflect.Constructor;
 import java.util.List;
 import javafx.scene.shape.*;
@@ -41,7 +42,12 @@ import javafx.stage.Stage;
  * no new public, protected or default-package code or data can be added to Critter
  */
 public abstract class Critter {
-
+	
+	//for auto-stepping purposes
+	public static boolean simulating = false;
+	public static int i = 0;
+	
+	//shape enumerations
 	public enum CritterShape {
 		CIRCLE,
 		SQUARE,
@@ -654,6 +660,21 @@ public abstract class Critter {
 		hbStepBtn.getChildren().add(stepBtn);
 		control_grid.add(hbStepBtn, 3, 3);
 
+		//AutoStep button
+		Button astepBtn = new Button("Begin stepping");
+		HBox hbaStepBtn = new HBox(10);
+		hbaStepBtn.setAlignment(Pos.TOP_RIGHT);
+		row += 1;
+		hbaStepBtn.getChildren().add(astepBtn);
+		control_grid.add(hbaStepBtn, 3, 5);
+
+		//QuitStep button
+		Button qstepBtn = new Button("Stop stepping");
+		HBox hbqStepBtn = new HBox(10);
+		hbqStepBtn.setAlignment(Pos.TOP_RIGHT);
+		row += 1;
+		hbqStepBtn.getChildren().add(qstepBtn);
+		control_grid.add(hbqStepBtn, 3, 6);
 		//Stats button
 		Button statsBtn = new Button("Display stats");
 		HBox hbStatsBtn = new HBox(10);
@@ -820,5 +841,37 @@ public abstract class Critter {
 				Main.initStage.close();
 			}			
 		});
+
+	/*	astepBtn.setOnAction(new EventHandler<ActionEvent>() {
+			@Override
+			public void handle(ActionEvent event) {
+				//	while(i < 100000000) {
+				//		i++;
+				//	}
+				//	i = 0;
+				simulating = true;
+				new Thread() {
+					public void run () {
+					try {
+						while (simulating == true) {
+							Critter.worldTimeStep();
+							Critter.displayWorld();
+						        Thread.sleep(1000);
+							System.out.println("a");
+						}
+					} catch(InterruptedException ex) {
+						    ex.printStackTrace();
+					}
+					}
+				}.start(); 
+				
+			}			
+		});
+		qstepBtn.setOnAction(new EventHandler<ActionEvent>() {
+			@Override
+			public void handle(ActionEvent event) {
+				simulating = false;
+			}			
+		}); */
 	}
 }
