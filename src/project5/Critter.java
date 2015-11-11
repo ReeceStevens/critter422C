@@ -546,14 +546,21 @@ public abstract class Critter {
 			switch(shape){
 				case CIRCLE:
 					crit_shape = new javafx.scene.shape.Circle(mid, mid,mid);
+					break;
 				case SQUARE:
 					crit_shape = new javafx.scene.shape.Rectangle(0,0,min,min);
+					break;
 				case TRIANGLE: 
 					crit_shape = new javafx.scene.shape.Polygon(new double[]{mid,0.0,min,min,0.0,min});
+					break;
 					//grid.add(new javafx.scene.shape.Polygon(), a.x_coord, a.y_coord);
 				case DIAMOND:
+					crit_shape = new javafx.scene.shape.Polygon(new double[]{mid,0.0,min,mid,mid,min, 0.0,mid});
+					break;
 					//grid.add(new javafx.scene.shape.Rectangle(), a.x_coord, a.y_coord);
 				case STAR:
+					crit_shape = new javafx.scene.shape.Polygon(new double[]{mid,0.0,(mid+mid/2),(mid/2),min,mid,(mid+mid/2),(mid+mid/2),min,min,mid,(mid+mid/2),0.0,min,0.0, (mid+mid/2), 0.0, mid, (mid/2), (mid/2)});
+					break;
 					//grid.add(new javafx.scene.shape.Rectangle(), a.x_coord, a.y_coord);
 			}
 			crit_shape.setStroke(a.viewOutlineColor());

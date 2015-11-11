@@ -30,7 +30,7 @@ public class ReeceCritter1 extends Critter {
 
 	@Override
 	public CritterShape viewShape() {
-		return Critter.CritterShape.SQUARE;
+		return Critter.CritterShape.STAR;
 	}
 
 	@Override

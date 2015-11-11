@@ -1,5 +1,7 @@
 package project5;
 
+import javafx.scene.paint.Color;
+
 public class Craig extends Critter {
 	
 	@Override
@@ -14,6 +16,17 @@ public class Craig extends Critter {
 		return Critter.CritterShape.DIAMOND;
 	}
 	
+
+	@Override
+	public javafx.scene.paint.Color viewOutlineColor() {
+		return Color.AZURE;
+	}	
+
+	@Override
+	public javafx.scene.paint.Color viewFillColor() {
+		return Color.BURLYWOOD;
+	}
+
 	public Craig() {
 		for (int k = 0; k < 8; k += 1) {
 			genes[k] = GENE_TOTAL / 8;
