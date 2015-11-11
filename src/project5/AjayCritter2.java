@@ -1,6 +1,7 @@
 
 package project5;
 
+import javafx.scene.paint.Color;
 public class AjayCritter2 extends Critter {
 
 	@Override
@@ -16,9 +17,18 @@ public class AjayCritter2 extends Critter {
 	private boolean hasMoved;
 
 	public CritterShape viewShape() {
-		return Critter.CritterShape.TRIANGLE;
+		return Critter.CritterShape.SQUARE;
 	}
 
+	@Override
+	public javafx.scene.paint.Color viewOutlineColor() {
+		return Color.LIMEGREEN;
+	}	
+
+	@Override
+	public javafx.scene.paint.Color viewFillColor() {
+		return Color.HOTPINK;
+	}
 	public AjayCritter2() {
 		age = 0;
 		dir = Critter.getRandomInt(8);
@@ -57,9 +67,20 @@ public class AjayCritter2 extends Critter {
 		}
 
 		if (getEnergy() >= 20 && getEnergy() < 100) { //moderately weak...can use energy on running to find food/beat other critters
-			run(dir);
-			num_runs += 1;
-			hasMoved = true;
+			if(look(dir, false) == "X") {
+				run(dir); //if two spaces away is another critter of the same type, run to minimize the chance of an encounter
+				num_runs += 1;
+				hasMoved = true;
+			}
+			else if(look(dir, true) == "X") {
+				hasMoved = false; //only a 1/9 chance of an encounter if the critter doesnt move if there critters are in adjacent squares
+			}
+			
+			else {
+				run(dir);
+				num_runs += 1;
+				hasMoved = true;
+			}
 		}
 
 		if(getEnergy() >= 100 && getEnergy() < 120) { //pretty good energy...can run and then reproduce
@@ -101,9 +122,9 @@ public class AjayCritter2 extends Critter {
 		}
 		String output = "";
 		output += "Total number of AjayCritter2s: " + ajaycritters2.size();
-		output += "Total number of walks: " + total_walks;
-		output += "Total number of runs: " + total_runs;
-		output += "The oldest critter is " + max_age + " years old.";
+		output += "\nTotal number of walks: " + total_walks;
+		output += "\nTotal number of runs: " + total_runs;
+		output += "\nThe oldest critter is " + max_age + " years old.";
 		return output;
 	}
 }

@@ -5,7 +5,7 @@
  * rgs835
  * <Student1 5-digit Unique No.>
  * Ajay Rastogi
- * <Student2 EID>
+ * asr2368
  * <Student2 5-digit Unique No.>
  * Slip days used: 0
  * Fall 2015
@@ -644,15 +644,16 @@ public abstract class Critter {
 				//TODO: make a more graceful error message if someone inputs an invalid critter type
 				if ((name == null)) {
 					actionTarget.setFill(Color.FIREBRICK);
-					actionTarget.setText("Please enter a critter class.");	
-					return;
+					actionTarget.setText("Please enter a critter class.");
+					return;	
 				}
 				if (numString == null) {
 					try {
 						Critter.makeCritter("project5.".concat(name));
 					} catch (InvalidCritterException e) {
 						actionTarget.setFill(Color.FIREBRICK);
-						actionTarget.setText("Please enter a valid critter class.");	
+						actionTarget.setText("Please enter a valid number of critters.");
+						return;	
 					}
 				}
 				else {
@@ -662,7 +663,8 @@ public abstract class Critter {
 								Critter.makeCritter("project5.".concat(name));
 							} catch (InvalidCritterException e) {
 								actionTarget.setFill(Color.FIREBRICK);
-								actionTarget.setText("Please enter a valid critter class.");	
+								actionTarget.setText("Please enter a valid critter class.");
+								return;	
 							}
 						}
 					} catch (NumberFormatException e) {
@@ -684,19 +686,24 @@ public abstract class Critter {
 				//TODO: make a more graceful error message if someone inputs an invalid critter type
 				if (numSteps == null) {
 					actionTarget.setFill(Color.FIREBRICK);
-					actionTarget.setText("Please enter a valid number of steps");
+					actionTarget.setText("Enter a valid number of steps");
+					return;
 				}
 				else {
 					try{ 
-					//	if (Integer.parseInt(numSteps) < 1) {
-					//		throw new IllegalArgumentException("Please enter a number larger than 1");
-					//	}
+						if (Integer.parseInt(numSteps) < 1) {
+						//	throw new NumberFormatException("Please enter a number larger than 1");
+							stepNumberField.setText("");			
+							actionTarget.setFill(Color.FIREBRICK);
+							actionTarget.setText("Enter a number larger than 1");
+							return;
+						}
 						for (int i = 0; i < Integer.parseInt(numSteps); i += 1) {
 							Critter.worldTimeStep();
 						}
 					} catch (NumberFormatException e) {
 						actionTarget.setFill(Color.FIREBRICK);
-						actionTarget.setText("Invalid number of steps. Please type an integer number of steps to execute.");	
+						actionTarget.setText("Enter an integer number of steps.");	
 						return;
 					}
 				}
@@ -726,7 +733,7 @@ public abstract class Critter {
 						actionTarget.setText("Please enter a valid critter class.");	
 					} catch (NullPointerException e) {
 						actionTarget.setFill(Color.FIREBRICK);
-						actionTarget.setText("Problem is here..");	
+						actionTarget.setText("Please enter a valid critter class.");	
 					}
 
 					// No instances of the class are alive.
