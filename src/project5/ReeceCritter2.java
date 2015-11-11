@@ -117,8 +117,8 @@ public class ReeceCritter2 extends Critter {
 		avg_age /= num_crits;
 		avg_energy /= num_crits;
 		String output = "";
-		output += "" + num_crits + " total ReeceCritter2       ";
-		output += "Average age: " + avg_age + "       ";
+		output += "" + num_crits + " total ReeceCritter2       \n";
+		output += "Average age: " + avg_age + "       \n";
 		output += "Average energy: " + avg_energy + "\n";
 		return output;
 	}

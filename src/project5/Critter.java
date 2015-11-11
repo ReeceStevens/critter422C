@@ -721,10 +721,122 @@ public abstract class Critter {
 		final Text actionTarget = new Text();
 		row += 2;
 		control_grid.add(actionTarget, 0, row);
+		VBox master_stat_box = new VBox(50);
 
-		master_grid.add(control_grid,1,0);
+		// Stats for AjayCritter1
+		VBox stats_ac1 = new VBox(20);
+		Label ac1statstitle = new Label("runStats for AjayCritter1");
+		List<Critter> instances = null;  
+		try{
+			instances = Critter.getInstances("project5.AjayCritter1");	
+		} catch (InvalidCritterException e) {
+			e.printStackTrace();
+			//actionTarget.setFill(Color.FIREBRICK);
+			//actionTarget.setText("Please enter a valid critter class.");	
+		} catch (NullPointerException e) {
+			//actionTarget.setFill(Color.FIREBRICK);
+			//actionTarget.setText("Please enter a valid critter class.");	
+			e.printStackTrace();
+		}
+		stats_ac1.getChildren().add(ac1statstitle);
+		if (instances.size() == 0) {
+			master_stat_box.getChildren().add(new Label("AjayCritter1\nNo instances of AjayCritter1 alive."));
+		} else {
+			Label ac1stats = new Label("AjayCritter1\n".concat(AjayCritter1.runStats(instances)));
+			//stats_ac1.getChildren().add(ac1stats);
+			master_stat_box.getChildren().add(ac1stats);
+		}
+
+		VBox stats_ac2 = new VBox(20);
+		Label ac2statstitle = new Label("runStats for AjayCritter2");
+		instances = null;  
+		try{
+			instances = Critter.getInstances("project5.AjayCritter2");	
+		} catch (InvalidCritterException e) {
+			e.printStackTrace();
+			//actionTarget.setFill(Color.FIREBRICK);
+			//actionTarget.setText("Please enter a valid critter class.");	
+		} catch (NullPointerException e) {
+			//actionTarget.setFill(Color.FIREBRICK);
+			//actionTarget.setText("Please enter a valid critter class.");	
+			e.printStackTrace();
+		}
+		if (instances.size() == 0) {
+			master_stat_box.getChildren().add(new Label("AjayCritter2\nNo instances of AjayCritter2 alive."));
+		} else {
+			Label ac2stats = new Label("AjayCritter2\n".concat(AjayCritter2.runStats(instances)));
+			master_stat_box.getChildren().add(ac2stats);
+		}
+
+		VBox stats_rc1 = new VBox(20);
+		Label rc1statstitle = new Label("runStats for ReeceCritter1");
+		instances = null;  
+		try{
+			instances = Critter.getInstances("project5.ReeceCritter1");	
+		} catch (InvalidCritterException e) {
+			e.printStackTrace();
+			//actionTarget.setFill(Color.FIREBRICK);
+			//actionTarget.setText("Please enter a valid critter class.");	
+		} catch (NullPointerException e) {
+			//actionTarget.setFill(Color.FIREBRICK);
+			//actionTarget.setText("Please enter a valid critter class.");	
+			e.printStackTrace();
+		}
+		stats_rc1.getChildren().add(rc1statstitle);
+		if (instances.size() == 0) {
+			master_stat_box.getChildren().add(new Label("ReeceCritter1\nNo instances of ReeceCritter1 alive."));
+		} else {
+			master_stat_box.getChildren().add(new Label("ReeceCritter1\n".concat(ReeceCritter1.runStats(instances))));
+		}
+
+		VBox stats_rc2 = new VBox(20);
+		Label rc2statstitle = new Label("runStats for ReeceCritter2");
+		instances = null;  
+		try{
+			instances = Critter.getInstances("project5.ReeceCritter2");	
+		} catch (InvalidCritterException e) {
+			e.printStackTrace();
+			//actionTarget.setFill(Color.FIREBRICK);
+			//actionTarget.setText("Please enter a valid critter class.");	
+		} catch (NullPointerException e) {
+			//actionTarget.setFill(Color.FIREBRICK);
+			//actionTarget.setText("Please enter a valid critter class.");	
+			e.printStackTrace();
+		}
+		stats_rc2.getChildren().add(rc2statstitle);
+		if (instances.size() == 0) {
+			master_stat_box.getChildren().add(new Label("ReeceCritter2\nNo instances of ReeceCritter2 alive."));
+		} else {
+			master_stat_box.getChildren().add(new Label("ReeceCritter2\n".concat("ReeceCritter2".concat(ReeceCritter2.runStats(instances)))));
+		}
+
+		VBox stats_craig = new VBox(20);
+		Label craigstatstitle = new Label("runStats for Craig");
+		instances = null;  
+		try{
+			instances = Critter.getInstances("project5.Craig");	
+		} catch (InvalidCritterException e) {
+			e.printStackTrace();
+			//actionTarget.setFill(Color.FIREBRICK);
+			//actionTarget.setText("Please enter a valid critter class.");	
+		} catch (NullPointerException e) {
+			//actionTarget.setFill(Color.FIREBRICK);
+			//actionTarget.setText("Please enter a valid critter class.");	
+			e.printStackTrace();
+		}
+		stats_craig.getChildren().add(craigstatstitle);
+		if (instances.size() == 0) {
+			master_stat_box.getChildren().add(new Label("Craig\nNo instances of Craig alive."));
+		} else {
+			master_stat_box.getChildren().add(new Label("Craig\n".concat(Craig.runStats(instances))));
+		}
+
+		master_grid.add(master_stat_box,1,0);
+
+		master_grid.add(control_grid,2,0);
 		Main.critterStage.setScene(new Scene(master_grid,window_w, window_h-22));
 		Main.critterStage.show();
+
 		makeBtn.setOnAction(new EventHandler<ActionEvent>() {
 			@Override
 			public void handle(ActionEvent event) {
