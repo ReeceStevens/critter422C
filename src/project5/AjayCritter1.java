@@ -19,7 +19,7 @@ public class AjayCritter1 extends Critter {
 	}
 	
 	public CritterShape viewShape() {
-		return Critter.CritterShape.CIRCLE;
+		return Critter.CritterShape.STAR;
 	}
 
 	@Override

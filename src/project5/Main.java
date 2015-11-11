@@ -21,6 +21,7 @@ import javafx.stage.Stage;
 public class Main extends Application {
 
 	public static GridPane map = new GridPane();
+	public static Stage initStage;
 	public static Stage controlStage;
 	public static Stage critterStage;
 	public static GridPane crit_grid;
@@ -29,6 +30,7 @@ public class Main extends Application {
 	@Override
 	public void start(Stage primaryStage) {
 		try {
+			initStage = primaryStage;
 			primaryStage.setTitle("Initialization Settings");
 			controlStage = new Stage();
 			critterStage = new Stage();
