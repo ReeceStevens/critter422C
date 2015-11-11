@@ -1,14 +1,16 @@
 /* CRITTERS Critter.java
- * EE422C Project 4 submission by
+ * EE422C Project 5 submission by
  * Replace <...> with your actual data.
  * Reece Stevens
  * rgs835
- * <Student1 5-digit Unique No.>
+ * 16340
  * Ajay Rastogi
  * asr2368
- * <Student2 5-digit Unique No.>
+ * 16345
  * Slip days used: 0
  * Fall 2015
+ * KNOWN ERRORS: PRINTING THE ERROR MESSAGES CAUSES A SHIFTING OF THE TEXTFIELDS BECAUSE OF AN EXPANSION OF THE GRID
+ *  SPACE AT WHICH THE ERROR MESSAGE IS PRINTED -- WE SHORTENED THE ERROR MESSAGES AS MUCH AS POSSIBLE TO COMPENSATE.
  */
 package project5;
 
@@ -686,6 +688,15 @@ public abstract class Critter {
 		row += 1;
 		hbqStepBtn.getChildren().add(qstepBtn);
 		control_grid.add(hbqStepBtn, 3, 6);
+
+		//SoftReset button
+		Button srBtn = new Button("Reset");
+		HBox hbsrBtn = new HBox(10);
+		hbsrBtn.setAlignment(Pos.TOP_RIGHT);
+		row += 1;
+		hbsrBtn.getChildren().add(srBtn);
+		control_grid.add(srBtn, 3, 7);
+
 		//Stats button
 		Button statsBtn = new Button("Display stats");
 		HBox hbStatsBtn = new HBox(10);
@@ -846,7 +857,7 @@ public abstract class Critter {
 						}
 					} catch (NumberFormatException e) {
 						actionTarget.setFill(Color.FIREBRICK);
-						actionTarget.setText("Invalid number of critters. Please type an integer number of critters to add.");	
+						actionTarget.setText("Enter a valid number of critters.");	
 						return;
 					}
 				//actionTarget.setFill(Color.FIREBRICK);
@@ -943,8 +954,17 @@ public abstract class Critter {
 		quitBtn.setOnAction(new EventHandler<ActionEvent>() {
 			@Override
 			public void handle(ActionEvent event) {
-				Main.critterStage.close();
-				Main.initStage.close();
+				Main.critterStage.close(); //quit the display pane
+				Main.initStage.close(); //quit the init pane
+			}			
+		});
+		srBtn.setOnAction(new EventHandler<ActionEvent>() {
+			@Override
+			public void handle(ActionEvent event) {
+				population.clear();
+				babies.clear();
+				Critter.displayWorld();
+				Main.initStage.toFront(); //bring the initialization screen back to the front
 			}			
 		});
 

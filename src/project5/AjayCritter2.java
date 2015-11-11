@@ -1,4 +1,15 @@
 
+ /* EE422C Project 5 submission by
+ * Replace <...> with your actual data.
+ * Reece Stevens
+ * rgs835
+ * 16340
+ * Ajay Rastogi
+ * asr2368
+ * 16345
+ * Slip days used: 0
+ * Fall 2015
+ */
 package project5;
 
 import javafx.scene.paint.Color;
