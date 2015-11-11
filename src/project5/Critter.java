@@ -518,51 +518,62 @@ public abstract class Critter {
 		}*/
 		// GUI FORMAT
 		// TODO: work in progress, correctly draw the shapes.
+		double window_w = Main.critterStage.getWidth();
+		double window_h = Main.critterStage.getHeight();
 		double width, height;
+		// If the window is first being created
+		/*
 		if (Double.isNaN(Main.critterStage.getWidth())) {
-			width = 500.0 - 50.0;
-			height = 500.0 - 50.0;
+			width = 500.0;
+			height = 500.0;
+		// Otherwise scale the grid to the current size of the window
 		} else {
-			width =  Main.crit_grid.getWidth() - 50 ;
-			height =  Main.crit_grid.getHeight() - 50;
-		}
+			width = Main.crit_grid.getWidth();
+			height = Main.crit_grid.getHeight();
+		}*/
+		width = 500.0;
+		height = 500.0;
 		GridPane master_grid = new GridPane();
 		Main.crit_grid.getChildren().clear();
-		System.out.printf("Width %f height %f\n",width, height);
+		System.out.printf("Width %f height %f\n",window_w, window_h);
 		double min = 0.0; 
 		if (width < height) { min = width/Params.world_width; }
 		else {min = height/Params.world_height; }
 		System.out.printf("minimum size: %f", min);
 		min = Math.floor(min);
+		
 		for (int i = 0; i < Params.world_width; i += 1) {
 			for (int j = 0; j < Params.world_height; j += 1) {
-				javafx.scene.shape.Rectangle clear_rect = new javafx.scene.shape.Rectangle(0,0,min,min);
+				javafx.scene.shape.Rectangle clear_rect = new javafx.scene.shape.Rectangle(0,0,min-1,min-1);
 				clear_rect.setFill(Color.WHITE);
 				clear_rect.setStroke(Color.WHITE);
 				Main.crit_grid.add(clear_rect,j,i);
 			}
-		}	
+		}
+			
+		min = min - 1;
+		double mid = Math.floor(min/2);
 		for (Critter a : population) {
 			CritterShape shape = a.viewShape();
 			javafx.scene.shape.Shape crit_shape = null;
-			double mid = Math.floor(min/2);
 			switch(shape){
 				case CIRCLE:
-					crit_shape = new javafx.scene.shape.Circle(mid, mid,mid);
+					crit_shape = new javafx.scene.shape.Circle(mid,mid,mid);
 					break;
 				case SQUARE:
 					crit_shape = new javafx.scene.shape.Rectangle(0,0,min,min);
 					break;
 				case TRIANGLE: 
-					crit_shape = new javafx.scene.shape.Polygon(new double[]{mid,0.0,min,min,0.0,min});
+					crit_shape = new javafx.scene.shape.Polygon(new double[]{mid,2.0,min-1,min-1,2.0,min-1});
 					break;
 					//grid.add(new javafx.scene.shape.Polygon(), a.x_coord, a.y_coord);
 				case DIAMOND:
-					crit_shape = new javafx.scene.shape.Polygon(new double[]{mid,0.0,min,mid,mid,min, 0.0,mid});
+					crit_shape = new javafx.scene.shape.Polygon(new double[]{mid,1.0,min-1,mid,mid,min-1, 1.0,mid});
 					break;
 					//grid.add(new javafx.scene.shape.Rectangle(), a.x_coord, a.y_coord);
 				case STAR:
-					crit_shape = new javafx.scene.shape.Polygon(new double[]{mid,0.0,(mid+mid/2),(mid/2),min,mid,(mid+mid/2),(mid+mid/2),min,min,mid,(mid+mid/2),0.0,min,0.0, (mid+mid/2), 0.0, mid, (mid/2), (mid/2)});
+					//crit_shape = new javafx.scene.shape.Rectangle(0,0,min,min);
+					crit_shape = new javafx.scene.shape.Polygon(new double[]{mid,2.0,(mid+mid/2),(mid/2),min-2,mid,(mid+mid/2),(mid+mid/2),min-2,min-2,mid,(mid+mid/2),2.0,min-2,2.0, (mid+mid/2), 2.0, mid, (mid/2), (mid/2)});
 					break;
 					//grid.add(new javafx.scene.shape.Rectangle(), a.x_coord, a.y_coord);
 			}
@@ -609,7 +620,7 @@ public abstract class Critter {
 		rdo_rc2.setToggleGroup(group);
 		rdo_craig.setToggleGroup(group);
 		rdo_algae.setToggleGroup(group);
-		rdo_rc1.setSelected(true);
+		rdo_ac1.setSelected(true);
 		VBox vbox1 = new VBox(20,rdo_ac1,rdo_ac2,rdo_rc1);
 		vbox1.setPadding(new Insets(10));
 		VBox vbox2 = new VBox(20,rdo_rc2,rdo_craig,rdo_algae);
@@ -676,7 +687,7 @@ public abstract class Critter {
 		control_grid.add(actionTarget, 0, row);
 
 		master_grid.add(control_grid,1,0);
-		Main.critterStage.setScene(new Scene(master_grid,Main.critterStage.getWidth(), Main.critterStage.getHeight()));
+		Main.critterStage.setScene(new Scene(master_grid,window_w, window_h-22));
 		Main.critterStage.show();
 		makeBtn.setOnAction(new EventHandler<ActionEvent>() {
 			@Override
@@ -684,28 +695,12 @@ public abstract class Critter {
 				//String name = critNameField.getText();
 				String name = "";
 				String numString = critNumField.getText();
-				//TODO: make a more graceful error message if someone inputs an invalid critter type
-				/*if ((name == null)) {
-					actionTarget.setFill(Color.FIREBRICK);
-					actionTarget.setText("Please enter a critter class.");
-					return;	
-				}
-				if (numString == null) {
-					try {
-						Critter.makeCritter("project5.".concat(name));
-					} catch (InvalidCritterException e) {
-						actionTarget.setFill(Color.FIREBRICK);
-						actionTarget.setText("Please enter a valid number of critters.");
-						return;	
-					}
-				}*/
 				if (rdo_ac1.isSelected()) name = "AjayCritter1";
 				if (rdo_ac2.isSelected()) name = "AjayCritter2";
 				if (rdo_rc1.isSelected()) name = "ReeceCritter1";
 				if (rdo_rc2.isSelected()) name = "ReeceCritter2";
 				if (rdo_craig.isSelected()) name = "Craig";
 				if (rdo_algae.isSelected()) name = "Algae";
-				else {
 					try{ 
 						for (int i = 0; i < Integer.parseInt(numString); i += 1) {
 							try {
@@ -721,7 +716,6 @@ public abstract class Critter {
 						actionTarget.setText("Invalid number of critters. Please type an integer number of critters to add.");	
 						return;
 					}
-				}
 				//actionTarget.setFill(Color.FIREBRICK);
 				//actionTarget.setText("TODO: message to display how many Critters added etc.");	
 				Critter.displayWorld();	
