@@ -1,5 +1,7 @@
 package project5;
 
+import javafx.scene.paint.Color;
+
 /*
  * Critter Description: ReeceCritter2 (Rook)
  *
@@ -34,7 +36,17 @@ public class ReeceCritter2 extends Critter {
 	}
 
 	public CritterShape viewShape() {
-		return Critter.CritterShape.STAR;
+		return Critter.CritterShape.TRIANGLE;
+	}
+	
+	@Override
+	public javafx.scene.paint.Color viewFillColor() {
+		return Color.BISQUE;
+	}
+
+	@Override
+	public javafx.scene.paint.Color viewOutlineColor() {
+		return Color.CORAL;
 	}
 
 	public boolean fight(String enemy) {

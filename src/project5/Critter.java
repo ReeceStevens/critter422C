@@ -542,13 +542,14 @@ public abstract class Critter {
 		for (Critter a : population) {
 			CritterShape shape = a.viewShape();
 			javafx.scene.shape.Shape crit_shape = null;
+			double mid = Math.floor(min/2);
 			switch(shape){
 				case CIRCLE:
-					double mid = Math.floor(min/2);
 					crit_shape = new javafx.scene.shape.Circle(mid, mid,mid);
 				case SQUARE:
 					crit_shape = new javafx.scene.shape.Rectangle(0,0,min,min);
 				case TRIANGLE: 
+					crit_shape = new javafx.scene.shape.Polygon(new double[]{mid,0.0,min,min,0.0,min});
 					//grid.add(new javafx.scene.shape.Polygon(), a.x_coord, a.y_coord);
 				case DIAMOND:
 					//grid.add(new javafx.scene.shape.Rectangle(), a.x_coord, a.y_coord);
