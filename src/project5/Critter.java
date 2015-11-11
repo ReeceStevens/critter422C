@@ -630,12 +630,21 @@ public abstract class Critter {
 		control_grid.add(hbStepBtn, 3, 2);
 
 		//Stats button
-		Button statsBtn = new Button("Display Stats");
+		Button statsBtn = new Button("Display stats");
 		HBox hbStatsBtn = new HBox(10);
 		hbStatsBtn.setAlignment(Pos.TOP_RIGHT);
 		row += 1;
 		hbStatsBtn.getChildren().add(statsBtn);
 		control_grid.add(hbStatsBtn, 3, 3);
+
+		//Quit button
+		Button quitBtn = new Button("Quit");
+		HBox hbQuitBtn = new HBox(10);
+		hbQuitBtn.setAlignment(Pos.TOP_RIGHT);
+		row += 1;
+		hbQuitBtn.getChildren().add(quitBtn);
+		control_grid.add(hbQuitBtn, 4, 7);
+
 		// Action when Make Critters Button is pressed.
 		final Text actionTarget = new Text();
 		row += 2;
@@ -770,6 +779,13 @@ public abstract class Critter {
 				}
 				//actionTarget.setText("TODO: message to display how many Critters added etc.");	
 				//Critter.displayWorld();	
+			}			
+		});
+		quitBtn.setOnAction(new EventHandler<ActionEvent>() {
+			@Override
+			public void handle(ActionEvent event) {
+				Main.critterStage.close();
+				Main.initStage.close();
 			}			
 		});
 	}
